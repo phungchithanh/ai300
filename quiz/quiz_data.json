@@ -1,0 +1,3099 @@
+[
+ {
+  "number": 1,
+  "type": "mc",
+  "multi": false,
+  "stem": "Background -\nFabrikam Inc. is a mid-sized healthcare analytics company that provides population health dashboards and predictive \ninsights to regional hospital systems across the United States. Fabrikam Inc. customers rely on near real time analytics to \nmonitor patient flow, staffing needs, and readmission risks. They use multiple traditional forecasting machine learning \nmodels for predictions.\nFabrikam Inc. has an established Microsoft Azure footprint. The company uses Jupyter Notebooks that run on a local server as \nthe primary development environment. The data science team is experiencing scalability, asset management and code \nmanagement issues with the current development platform. Fabrikam Inc. plans to migrate to a cloud-based development \nenvironment to mitigate the issues.\nAdditionally, the company plans to implement a Retrieval-Augmented Generation (RAG)-based chat application for client \nsupport. Leadership requires the application to be developed and deployed with a low operational risk.\nCurrent Environment -\nFabrikam Inc. operates a single Azure subscription that has the following components:\nAzure Data Lake Storage Gen2 that contains de-identified clinical and operational datasets\nAzure AI Search indexing curated analytical documents and reference materials\nA small set of Python-based training scripts maintained by data scientists\nAzure OpenAI Service with deployed foundational models\nA Microsoft Foundry resource for building a RAG-based solution\nEvaluation data has manually defined expected responses.\nThe current challenges faced by the data science team include the following:\nModel training jobs are run manually from notebooks.\nExperiment tracking is inconsistent\nModel versions are registered without standardized metadata.\nDeployment is performed manually by data scientists, with limited rollback capability.\nThe team has no standardized evaluation process for generative AI outputs.\nThe environment currently allows public network access. Authentication relies on user accounts rather than managed identities. \nCompute targets are manually created and shared across experiments. This has led to resource contention during peak usage.\nBusiness Requirements -\nFabrikam Inc. has the following business requirements for the modernization initiative:\nProvide a conversational interface that answers analytics questions by using internal documents and datasets.\nEnsure that sensitive healthcare-related data is not exposed outside the Fabrikam Inc. Azure tenant.\nEnable repeatable and auditable model training and deployment processes.\nSupport experimentation to compare prompt strategies and fine-tuned models.\nAlign the model with the ranked preferences and optimize behavior for the long term.\nMinimize disruption to existing analytics workloads during rollout.\nTechnical Requirements -\nTo support the business goals, Fabrikam Inc. identifies these technical requirements:\nUse Azure Machine Learning workspaces to centrally manage data assets, models, and environments.\nImplement experiment tracking and model versioning for all training jobs.\nOrchestrate training and evaluation by using pipelines rather than manually running notebooks.\nDeploy traditional machine learning models with support for staged rollout and rollback.\nImprove RAG-based solution output quality.\nUse the existing evaluation datasets that are based on real data with input-output pairs.\nApply advanced fine-tuning techniques only when prompt engineering is insufficient\nIssues and Constraints -\nFabrikam Inc. must comply with internal security policies that require the company to restrict network access and avoid \nlong-lived secrets. The data science team has limited Azure DevOps experience, so solutions must favor managed services \nand automation over custom infrastructure.\nCost predictability is important. Leadership prefers serverless or managed compute options where possible but is willing \nto approve dedicated compute for stable production workloads.\nProblem Statement -\nFabrikam Inc. must design and implement an Azure-based AI operations solution that enables reliable training, evaluation, \ndeployment, and iteration of generative AI models. The solution must support experimentation and gradual rollout while \nensuring governance, security, and operational stability. The data science and platform teams must collaborate to deliver \nthis solution by using Azure Machine Learning and Microsoft Foundry capabilities.\nYou need to standardize how Fabrikam Inc. manages machine learning assets.\nWhich action should you perform first?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Register assets in the Azure Machine Learning registry."
+   },
+   {
+    "letter": "B",
+    "text": "Create a shared Azure Machine Learning workspace."
+   },
+   {
+    "letter": "C",
+    "text": "Deploy a managed online endpoint."
+   },
+   {
+    "letter": "D",
+    "text": "Create a new Microsoft Foundry project."
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 2,
+  "type": "mc",
+  "multi": false,
+  "stem": "Background -\nFabrikam Inc. is a mid-sized healthcare analytics company that provides population health dashboards and predictive insights \nto regional hospital systems across the United States. Fabrikam Inc. customers rely on near real time analytics to monitor \npatient flow, staffing needs, and readmission risks. They use multiple traditional forecasting machine learning models for \npredictions.\nFabrikam Inc. has an established Microsoft Azure footprint. The company uses Jupyter Notebooks that run on a local server as \nthe primary development environment. The data science team is experiencing scalability, asset management and code \nmanagement issues with the current development platform. Fabrikam Inc. plans to migrate to a cloud-based development \nenvironment to mitigate the issues.\nAdditionally, the company plans to implement a Retrieval-Augmented Generation (RAG)-based chat application for client \nsupport. Leadership requires the application to be developed and deployed with a low operational risk.\nCurrent Environment -\nFabrikam Inc. operates a single Azure subscription that has the following components:\nAzure Data Lake Storage Gen2 that contains de-identified clinical and operational datasets\nAzure AI Search indexing curated analytical documents and reference materials\nA small set of Python-based training scripts maintained by data scientists\nAzure OpenAI Service with deployed foundational models\nA Microsoft Foundry resource for building a RAG-based solution\nEvaluation data has manually defined expected responses.\nThe current challenges faced by the data science team include the following:\nModel training jobs are run manually from notebooks.\nExperiment tracking is inconsistent\nModel versions are registered without standardized metadata.\nDeployment is performed manually by data scientists, with limited rollback capability.\nThe team has no standardized evaluation process for generative AI outputs.\nThe environment currently allows public network access. Authentication relies on user accounts rather than managed identities. \nCompute targets are manually created and shared across experiments. This has led to resource contention during peak usage.\nBusiness Requirements -\nFabrikam Inc. has the following business requirements for the modernization initiative:\nProvide a conversational interface that answers analytics questions by using internal documents and datasets.\nEnsure that sensitive healthcare-related data is not exposed outside the Fabrikam Inc. Azure tenant.\nEnable repeatable and auditable model training and deployment processes.\nSupport experimentation to compare prompt strategies and fine-tuned models.\nAlign the model with the ranked preferences and optimize behavior for the long term.\nMinimize disruption to existing analytics workloads during rollout.\nTechnical Requirements -\nTo support the business goals, Fabrikam Inc. identifies these technical requirements:\nUse Azure Machine Learning workspaces to centrally manage data assets, models, and environments.\nImplement experiment tracking and model versioning for all training jobs.\nOrchestrate training and evaluation by using pipelines rather than manually running notebooks.\nDeploy traditional machine learning models with support for staged rollout and rollback.\nImprove RAG-based solution output quality.\nUse the existing evaluation datasets that are based on real data with input-output pairs.\nApply advanced fine-tuning techniques only when prompt engineering is insufficient\nIssues and Constraints -\nFabrikam Inc. must comply with internal security policies that require the company to restrict network access and avoid long-\nlived secrets. The data science team has limited Azure DevOps experience, so solutions must favor managed services and \nautomation over custom infrastructure.\nCost predictability is important. Leadership prefers serverless or managed compute options where possible but is willing to \napprove dedicated compute for stable production workloads.\nProblem Statement -\nFabrikam Inc. must design and implement an Azure-based AI operations solution that enables reliable training, evaluation, \ndeployment, and iteration of generative AI models. The solution must support experimentation and gradual rollout while \nensuring governance, security, and operational stability. The data science and platform teams must collaborate to deliver this \nsolution by using Azure Machine Learning and Microsoft Foundry capabilities.\nYou need to isolate training workloads while remaining cost-aware to address Fabrikam Inc.’s issues, constraints, and \ntechnical requirements.\nWhat should you implement?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Training jobs that run on a single shared compute cluster"
+   },
+   {
+    "letter": "B",
+    "text": "Fixed-size compute cluster"
+   },
+   {
+    "letter": "C",
+    "text": "Dedicated compute clusters per experiment"
+   },
+   {
+    "letter": "D",
+    "text": "Managed compute targets with autoscaling"
+   }
+  ],
+  "correct": [
+   "D"
+  ]
+ },
+ {
+  "number": 3,
+  "type": "reveal",
+  "question_images": [
+   "assets/q3_q0.png",
+   "assets/q3_q1.png"
+  ],
+  "answer_images": [
+   "assets/q3_a0.png"
+  ],
+  "label": "Hotspot"
+ },
+ {
+  "number": 4,
+  "type": "mc",
+  "multi": false,
+  "stem": "You manage an Azure Machine learning workspace. You develop a machine learning model.\nYou must deploy the model to use a low-priority VM with a pricing discount.\nYou need to deploy the model.\nWhich compute target should you use?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Azure Container Instances (ACI)"
+   },
+   {
+    "letter": "B",
+    "text": "Azure Machine Learning compute clusters"
+   },
+   {
+    "letter": "C",
+    "text": "Local deployment"
+   },
+   {
+    "letter": "D",
+    "text": "Azure Kubernetes Service (AKS)"
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 5,
+  "type": "mc",
+  "multi": false,
+  "stem": "A team manages an Azure Machine Learning workspace where they deploy models to online endpoints.\nThe team needs to introduce a new version of a model to production without disrupting existing users.\nThe team must validate the new version before full rollout.\nYou need to reduce risk during deployment.\nWhat should you do?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Deploy the model to a batch endpoint."
+   },
+   {
+    "letter": "B",
+    "text": "Split traffic between deployments."
+   },
+   {
+    "letter": "C",
+    "text": "Replace the existing endpoint."
+   },
+   {
+    "letter": "D",
+    "text": "Route all traffic to the new deployment."
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 6,
+  "type": "mc",
+  "multi": false,
+  "stem": "You have a deployment of an Azure OpenAI Service base model.\nYou plan to fine-tune the model.\nYou need to prepare a file that contains training data.\nWhich file format should you use?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "CSV"
+   },
+   {
+    "letter": "B",
+    "text": "TSV"
+   },
+   {
+    "letter": "C",
+    "text": "JSONL"
+   },
+   {
+    "letter": "D",
+    "text": "JSON"
+   }
+  ],
+  "correct": [
+   "C"
+  ]
+ },
+ {
+  "number": 7,
+  "type": "mc",
+  "multi": false,
+  "stem": "You have a deployment of an Azure OpenAI Service base model.\nYou plan to fine-tune the model.\nYou need to prepare a file that contains training data for multi-turn chat.\nWhich file encoding method should you use?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "ISO-8859-1"
+   },
+   {
+    "letter": "B",
+    "text": "UTF-16"
+   },
+   {
+    "letter": "C",
+    "text": "UTF-8"
+   },
+   {
+    "letter": "D",
+    "text": "ASCII"
+   }
+  ],
+  "correct": [
+   "C"
+  ]
+ },
+ {
+  "number": 8,
+  "type": "mc",
+  "multi": false,
+  "stem": "You are fine-tuning a base language model to analyze customer feedback.\nYou label examples of support tickets. You must improve classification accuracy by configuring and fine-tuning the base \nmodel in Microsoft Foundry.\nYou need to configure and run fine-tuning.\nWhat should you do first?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Use prompt flow to generate multiple prompt templates for evaluation."
+   },
+   {
+    "letter": "B",
+    "text": "Deploy the base model to an online endpoint before starting fine-tuning."
+   },
+   {
+    "letter": "C",
+    "text": "Enable tracing for all inference calls in the evaluation pipeline."
+   },
+   {
+    "letter": "D",
+    "text": "Format the dataset as a JSONL file with prompt-completion pairs and upload the file."
+   }
+  ],
+  "correct": [
+   "C"
+  ]
+ },
+ {
+  "number": 9,
+  "type": "mc",
+  "multi": true,
+  "stem": "A data science team trains a classification model that predicts loan approval outcomes.\nBefore registering the model, the team must ensure the following:\n- Predictions must not disproportionately impact protected groups.\n- Prediction errors can be evaluated across different data segments.\nYou need to assess whether the model meets Responsible AI expectations.\nWhich two approaches should you use? Each correct answer presents part of the solution.\nChoose two.\nNOTE: Each correct selection is worth one point.",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Analyze error rates across defined demographic cohorts."
+   },
+   {
+    "letter": "B",
+    "text": "Evaluate feature importance for prediction transparency."
+   },
+   {
+    "letter": "C",
+    "text": "Measure endpoint latency under load."
+   },
+   {
+    "letter": "D",
+    "text": "Analyze error rates across the global cohort."
+   },
+   {
+    "letter": "E",
+    "text": "Validate inference schema compatibility."
+   }
+  ],
+  "correct": [
+   "A",
+   "B"
+  ]
+ },
+ {
+  "number": 10,
+  "type": "mc",
+  "multi": false,
+  "stem": "A team schedules weekly retraining of a model using Azure ML pipelines. They also want retraining triggered \nautomatically when production data significantly deviates from training data distribution, without duplicating pipeline \nlogic. What should they implement?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "One pipeline triggered by schedule and data drift alerts"
+   },
+   {
+    "letter": "B",
+    "text": "Azure Function to retrain model manually"
+   },
+   {
+    "letter": "C",
+    "text": "Notebook-based retraining process"
+   },
+   {
+    "letter": "D",
+    "text": "Two independent pipelines with shared scripts"
+   }
+  ],
+  "correct": [
+   "A"
+  ]
+ },
+ {
+  "number": 11,
+  "type": "mc",
+  "multi": false,
+  "stem": "Note: This question is part of a series of questions that present the same scenario. Each question in the series \ncontains a unique solution that might meet the stated goals. Some question sets might have more than one correct \nsolution, while others might not have a correct solution.\nAfter you answer a question in this section, you will NOT be able to return to it. As a result, these questions will not \nappear on the review screen.\nYou work in Microsoft Foundry with a prompt flow.\nYou must manually evaluate prompts and compare results across prompt variants.\nYou need to capture the inputs, outputs, token usage, and latencies for each flow run for the evaluation.\nSolution: In Microsoft Foundry, turn on Tracing for the prompt flow of the project and execute test runs to produce trace \ndata.\nDoes the solution meet the goal?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "No"
+   },
+   {
+    "letter": "B",
+    "text": "Yes"
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 12,
+  "type": "mc",
+  "multi": false,
+  "stem": "A team develops multiple AI applications in Microsoft Foundry that rely on shared prompt templates.\nThe team requires a centralized way to track, version, and reuse prompt content across projects.\nYou need to recommend a solution to track and reuse prompt content.\nWhich approach should you recommend?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Embed prompts directly in application configuration files."
+   },
+   {
+    "letter": "B",
+    "text": "Store prompts as versioned files in a Git repository."
+   },
+   {
+    "letter": "C",
+    "text": "Register prompts as datasets in the Azure Machine Learning workspace."
+   },
+   {
+    "letter": "D",
+    "text": "Persist prompts in Azure Blob Storage with folder-level organization."
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 13,
+  "type": "reveal",
+  "question_images": [
+   "assets/q13_q0.png",
+   "assets/q13_q1.png"
+  ],
+  "answer_images": [
+   "assets/q13_a0.png"
+  ],
+  "label": "Hotspot Question"
+ },
+ {
+  "number": 14,
+  "type": "mc",
+  "multi": false,
+  "stem": "A company requires that only models meeting predefined performance thresholds are registered and deployed. The \nsolution must be fully automated within the ML workflow. What should you implement?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "GitHub pull request checks"
+   },
+   {
+    "letter": "B",
+    "text": "Conditional logic in pipeline"
+   },
+   {
+    "letter": "C",
+    "text": "Azure Monitor alerts"
+   },
+   {
+    "letter": "D",
+    "text": "Manual approval gate"
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 15,
+  "type": "mc",
+  "multi": false,
+  "stem": "Note: This question is part of a series of questions that present the same scenario. Each question in the series contains \na unique solution that might meet the stated goals. Some question sets might have more than one correct solution, while \nothers might not have a correct solution.\nAfter you answer a question in this section, you will NOT be able to return to it. As a result, these questions will not appear \non the review screen.\nYou work in Microsoft Foundry with a prompt flow.\nYou must manually evaluate prompts and compare results across prompt variants.\nYou need to capture the inputs, outputs, token usage, and latencies for each flow run for the evaluation.\nSolution: Use the prompt flow SDK to enable tracing for the flow before executing runs. Then run the flow to generate \ntraceable results.\nDoes the solution meet the goal?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "No"
+   },
+   {
+    "letter": "B",
+    "text": "Yes"
+   }
+  ],
+  "correct": [
+   "A"
+  ]
+ },
+ {
+  "number": 16,
+  "type": "reveal",
+  "question_images": [
+   "assets/q16_q0.png",
+   "assets/q16_q1.png"
+  ],
+  "answer_images": [
+   "assets/q16_a0.png"
+  ],
+  "label": "Drag and Drop"
+ },
+ {
+  "number": 17,
+  "type": "mc",
+  "multi": false,
+  "stem": "An Azure Machine Learning workspace processes sensitive training data.\nThe workspace must NOT be accessible from the public internet.\nYou need to restrict network access.\nWhich configuration should you implement?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Service endpoints"
+   },
+   {
+    "letter": "B",
+    "text": "Network security groups"
+   },
+   {
+    "letter": "C",
+    "text": "Azure Firewall rules"
+   },
+   {
+    "letter": "D",
+    "text": "Private endpoints"
+   }
+  ],
+  "correct": [
+   "D"
+  ]
+ },
+ {
+  "number": 18,
+  "type": "reveal",
+  "question_images": [
+   "assets/q18_q0.png"
+  ],
+  "answer_images": [
+   "assets/q18_a0.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 19,
+  "type": "mc",
+  "multi": false,
+  "stem": "During training, pipelines occasionally fail due to schema mismatch caused by upstream data changes. You need a \nrobust and automated solution that prevents invalid data from reaching training steps. What is the BEST approach?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Ignore schema differences"
+   },
+   {
+    "letter": "B",
+    "text": "Retrain manually when failure occurs"
+   },
+   {
+    "letter": "C",
+    "text": "Add a data validation component in pipeline"
+   },
+   {
+    "letter": "D",
+    "text": "Use larger compute"
+   }
+  ],
+  "correct": [
+   "C"
+  ]
+ },
+ {
+  "number": 20,
+  "type": "reveal",
+  "question_images": [
+   "assets/q20_q0.png"
+  ],
+  "answer_images": [
+   "assets/q20_a0.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 21,
+  "type": "reveal",
+  "question_images": [
+   "assets/q21_q0.png",
+   "assets/q21_q1.png"
+  ],
+  "answer_images": [
+   "assets/q21_a0.png"
+  ],
+  "label": "Hotspot Question"
+ },
+ {
+  "number": 22,
+  "type": "mc",
+  "multi": true,
+  "stem": "A Retrieval-Augmented Generation (RAG) solution returns incomplete answers because relevant content is \ninconsistently retrieved from the knowledge source.\nYou need to improve RAG accuracy without changing the embedding model currently in use. You need to achieve this \ngoal while minimizing operational costs.\nWhich two actions should you perform? Each correct answer presents part of the solution.\nChoose two.\nNOTE: Each correct selection is worth one point.",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Increase token limits for all requests."
+   },
+   {
+    "letter": "B",
+    "text": "Implement an optimized re-ranker."
+   },
+   {
+    "letter": "C",
+    "text": "Optimize the length of embedding vectors."
+   },
+   {
+    "letter": "D",
+    "text": "Tune chunk size and overlap to match content structure."
+   }
+  ],
+  "correct": [
+   "B",
+   "D"
+  ]
+ },
+ {
+  "number": 23,
+  "type": "mc",
+  "multi": false,
+  "stem": "You manage a Microsoft Foundry project. You build a multi-turn chatbot application.\nYou plan to filter your traces to identify issues while observing how the application is responding. The solution must not \nuse an external knowledge base.\nYou need to select an evaluation metric.\nWhich built-in evaluator should you use?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "RelevanceEvaluator"
+   },
+   {
+    "letter": "B",
+    "text": "SimilarityEvaluator"
+   },
+   {
+    "letter": "C",
+    "text": "QAEvaluator"
+   },
+   {
+    "letter": "D",
+    "text": "CoherenceEvaluator"
+   }
+  ],
+  "correct": [
+   "D"
+  ]
+ },
+ {
+  "number": 24,
+  "type": "mc",
+  "multi": false,
+  "stem": "You have a Microsoft Foundry project.\nYou plan to use the Microsoft Foundry portal to fine-tune a base Azure OpenAI Service model \nthat can accept both text and images as input.\nYou need to choose the suitable model.\nWhich model should you choose?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "davinci-002"
+   },
+   {
+    "letter": "B",
+    "text": "gpt-4o"
+   },
+   {
+    "letter": "C",
+    "text": "gpt-35-turbo"
+   },
+   {
+    "letter": "D",
+    "text": "gpt-4"
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 25,
+  "type": "reveal",
+  "question_images": [
+   "assets/q25_q0.png"
+  ],
+  "answer_images": [
+   "assets/q25_a0.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 26,
+  "type": "reveal",
+  "question_images": [
+   "assets/q26_q0.png",
+   "assets/q26_q1.png"
+  ],
+  "answer_images": [
+   "assets/q26_a0.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 27,
+  "type": "reveal",
+  "question_images": [
+   "assets/q27_q0.png"
+  ],
+  "answer_images": [
+   "assets/q27_a0.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 28,
+  "type": "reveal",
+  "question_images": [
+   "assets/q28_q0.png"
+  ],
+  "answer_images": [
+   "assets/q28_a0.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 29,
+  "type": "reveal",
+  "question_images": [
+   "assets/q29_q0.png"
+  ],
+  "answer_images": [
+   "assets/q29_a0.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 30,
+  "type": "mc",
+  "multi": false,
+  "stem": "A team is developing a generative AI assistant. The team is experimenting with multiple prompt variants to improve the \nuser experience.\nWhen comparing prompt variants, the team plans to assess whether the generated responses are grammatically correct.\nYou need to evaluate the quality of the language from the generated responses.\nWhich evaluator should you use?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Coherence"
+   },
+   {
+    "letter": "B",
+    "text": "Textual similarity"
+   },
+   {
+    "letter": "C",
+    "text": "Grounded ness"
+   },
+   {
+    "letter": "D",
+    "text": "Fluency"
+   }
+  ],
+  "correct": [
+   "D"
+  ]
+ },
+ {
+  "number": 31,
+  "type": "mc",
+  "multi": false,
+  "stem": "Background -\nFabrikam Inc. is a mid-sized healthcare analytics company that provides population health dashboards and predictive \ninsights to regional hospital systems across the United States. Fabrikam Inc. customers rely on near real time analytics to \nmonitor patient flow, staffing needs, and readmission risks. They use multiple traditional forecasting machine learning \nmodels for predictions.\nFabrikam Inc. has an established Microsoft Azure footprint. The company uses Jupyter Notebooks that run on a local server \nas the primary development environment. The data science team is experiencing scalability, asset management and code \nmanagement issues with the current development platform. Fabrikam Inc. plans to migrate to a cloud-based development \nenvironment to mitigate the issues.\nAdditionally, the company plans to implement a Retrieval-Augmented Generation (RAG)-based chat application for client \nsupport. Leadership requires the application to be developed and deployed with a low operational risk.\nCurrent Environment -\nFabrikam Inc. operates a single Azure subscription that has the following components:\nAzure Data Lake Storage Gen2 that contains de-identified clinical and operational datasets\nAzure AI Search indexing curated analytical documents and reference materials\nA small set of Python-based training scripts maintained by data scientists\nAzure OpenAI Service with deployed foundational models\nA Microsoft Foundry resource for building a RAG-based solution\nEvaluation data has manually defined expected responses.\nThe current challenges faced by the data science team include the following:\nModel training jobs are run manually from notebooks.\nExperiment tracking is inconsistent\nModel versions are registered without standardized metadata.\nDeployment is performed manually by data scientists, with limited rollback capability.\nThe team has no standardized evaluation process for generative AI outputs.\nThe environment currently allows public network access. Authentication relies on user accounts rather than managed \nidentities. Compute targets are manually created and shared across experiments. This has led to resource contention \nduring peak usage.\nBusiness Requirements -\nFabrikam Inc. has the following business requirements for the modernization initiative:\nProvide a conversational interface that answers analytics questions by using internal documents and datasets.\nEnsure that sensitive healthcare-related data is not exposed outside the Fabrikam Inc. Azure tenant.\nEnable repeatable and auditable model training and deployment processes.\nSupport experimentation to compare prompt strategies and fine-tuned models.\nAlign the model with the ranked preferences and optimize behavior for the long term.\nMinimize disruption to existing analytics workloads during rollout.\nTechnical Requirements -\nTo support the business goals, Fabrikam Inc. identifies these technical requirements:\nUse Azure Machine Learning workspaces to centrally manage data assets, models, and environments.\nImplement experiment tracking and model versioning for all training jobs.\nOrchestrate training and evaluation by using pipelines rather than manually running notebooks.\nDeploy traditional machine learning models with support for staged rollout and rollback.\nImprove RAG-based solution output quality.\nUse the existing evaluation datasets that are based on real data with input-output pairs.\nApply advanced fine-tuning techniques only when prompt engineering is insufficient\nIssues and Constraints -\nFabrikam Inc. must comply with internal security policies that require the company to restrict network access and avoid long-\nlived secrets. The data science team has limited Azure DevOps experience, so solutions must favor managed services and \nautomation over custom infrastructure.\nCost predictability is important. Leadership prefers serverless or managed compute options where possible but is willing to \napprove dedicated compute for stable production workloads.\nProblem Statement -\nFabrikam Inc. must design and implement an Azure-based AI operations solution that enables reliable training, evaluation, \ndeployment, and iteration of generative AI models. The solution must support experimentation and gradual rollout while \nensuring governance, security, and operational stability. The data science and platform teams must collaborate to deliver this \nsolution by using Azure Machine Learning and Microsoft Foundry capabilities.\nYou need to recommend an experiment-tracking strategy that ensures consistent experiment results.\nWhat should you recommend?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Azure Machine Learning job output logs"
+   },
+   {
+    "letter": "B",
+    "text": "MLflow experiment tracking"
+   },
+   {
+    "letter": "C",
+    "text": "Application Insights logs"
+   },
+   {
+    "letter": "D",
+    "text": "Azure Monitor alerts"
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 32,
+  "type": "reveal",
+  "question_images": [
+   "assets/q32_q0.png",
+   "assets/q32_q1.png"
+  ],
+  "answer_images": [
+   "assets/q32_a0.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 33,
+  "type": "mc",
+  "multi": false,
+  "stem": "You deploy a model to production but do not have labeled data available for evaluating prediction \naccuracy. However, you must monitor model health continuously. What is the BEST strategy?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Use data drift detection"
+   },
+   {
+    "letter": "B",
+    "text": "Disable monitoring"
+   },
+   {
+    "letter": "C",
+    "text": "Monitor accuracy metrics"
+   },
+   {
+    "letter": "D",
+    "text": "Perform manual evaluation only"
+   }
+  ],
+  "correct": [
+   "A"
+  ]
+ },
+ {
+  "number": 34,
+  "type": "reveal",
+  "question_images": [
+   "assets/q34_q0.png",
+   "assets/q34_q1.png"
+  ],
+  "answer_images": [
+   "assets/q34_a0.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 35,
+  "type": "mc",
+  "multi": false,
+  "stem": "You need to run large-scale inference jobs on millions of records periodically. Jobs are not latency-sensitive but must \nbe cost-efficient and scalable. Which deployment option is MOST appropriate?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Notebook execution"
+   },
+   {
+    "letter": "B",
+    "text": "Managed online endpoint"
+   },
+   {
+    "letter": "C",
+    "text": "Local endpoint"
+   },
+   {
+    "letter": "D",
+    "text": "Batch endpoint"
+   }
+  ],
+  "correct": [
+   "D"
+  ]
+ },
+ {
+  "number": 36,
+  "type": "mc",
+  "multi": true,
+  "stem": "A financial services company is deploying Microsoft Foundry to host generative AI workloads that process regulated \ncustomer data. The Microsoft Foundry environment must prevent any public network exposure while still allowing services \nmanaged by Microsoft Foundry to communicate with dependent Azure resources.\nSecurity auditors require that all traffic to and from the Microsoft Foundry resource remain on private networks, with no public \nendpoints available.\nYou need to configure the Microsoft Foundry environment so that network access is restricted while maintaining full platform \nfunctionality.\nWhich two actions should you perform? Each correct answer presents part of the solution.\nChoose two.\nNOTE: Each correct selection is worth one point.",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Disable all inbound network access."
+   },
+   {
+    "letter": "B",
+    "text": "Deploy the Microsoft Foundry resource in a separate Azure subscription."
+   },
+   {
+    "letter": "C",
+    "text": "Use API key authentication for all model endpoints."
+   },
+   {
+    "letter": "D",
+    "text": "Disable public network access to the Microsoft Foundry resource."
+   },
+   {
+    "letter": "E",
+    "text": "Configure a managed virtual network for the Microsoft Foundry resource."
+   }
+  ],
+  "correct": [
+   "A",
+   "E"
+  ]
+ },
+ {
+  "number": 37,
+  "type": "mc",
+  "multi": true,
+  "stem": "A company's platform engineers manage the resource settings and governance of Microsoft Foundry.\nDevelopers must be able to create and update project assets but must not be able to change resource-level configurations.\nYou need to enforce least privilege access for the engineers and developers.\nWhich two actions should you perform? Each correct answer presents part of the solution.\nChoose two.\nNOTE: Each correct selection is worth one point.",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Share a single API key across all teams."
+   },
+   {
+    "letter": "B",
+    "text": "Assign a resource-level Azure AI Administrator role to the platform engineers."
+   },
+   {
+    "letter": "C",
+    "text": "Disable Microsoft Entra ID authentication for the Microsoft Foundry resource."
+   },
+   {
+    "letter": "D",
+    "text": "Assign the Azure AI Developer role to the developers."
+   }
+  ],
+  "correct": [
+   "B",
+   "D"
+  ]
+ },
+ {
+  "number": 38,
+  "type": "mc",
+  "multi": false,
+  "stem": "You create a binary classification model. You use the Fairlearn package to assess model fairness.\nYou must eliminate the need to retrain the model.\nYou need to implement the Fairlearan package.\nWhich algorithm should you use?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "fairiearn.reductions.ExponentiatedGradient"
+   },
+   {
+    "letter": "B",
+    "text": "fairlearn.preprocessing.CorrelationRemover"
+   },
+   {
+    "letter": "C",
+    "text": "fairlearn.reductions.GridSearch"
+   },
+   {
+    "letter": "D",
+    "text": "fairlearn.postprocessing.ThresholdOptimizer"
+   }
+  ],
+  "correct": [
+   "D"
+  ]
+ },
+ {
+  "number": 39,
+  "type": "mc",
+  "multi": false,
+  "stem": "A team accidentally deploys an outdated model version due to incorrect tagging. You need to enforce strict \ndeployment governance and version control. What should you implement?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Rename models"
+   },
+   {
+    "letter": "B",
+    "text": "Use version pinning and approval workflows"
+   },
+   {
+    "letter": "C",
+    "text": "Increase logging"
+   },
+   {
+    "letter": "D",
+    "text": "Store models locally"
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 40,
+  "type": "mc",
+  "multi": false,
+  "stem": "A real-time endpoint experiences sporadic latency spikes. Investigation reveals instances scale down to zero during \ninactivity. You need to reduce latency without significantly increasing cost.\nWhat should you configure?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Increase timeout settings"
+   },
+   {
+    "letter": "B",
+    "text": "Set minimum instance count"
+   },
+   {
+    "letter": "C",
+    "text": "Switch to batch endpoint"
+   },
+   {
+    "letter": "D",
+    "text": "Reduce logging"
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 41,
+  "type": "mc",
+  "multi": false,
+  "stem": "You want to ensure ML pipelines produce identical results when executed in different regions or workspaces. Which \nfactor is MOST critical to control for reproducibility?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Same compute SKU"
+   },
+   {
+    "letter": "B",
+    "text": "Same dataset name"
+   },
+   {
+    "letter": "C",
+    "text": "Versioned datasets and environments"
+   },
+   {
+    "letter": "D",
+    "text": "Same user identity"
+   }
+  ],
+  "correct": [
+   "C"
+  ]
+ },
+ {
+  "number": 42,
+  "type": "mc",
+  "multi": false,
+  "stem": "A team develops and manages a conversational assistant by using Microsoft Foundry.\nThe team must be able to validate that the assistant does not produce hateful responses before the application is \nexposed to any users.\nYou need to evaluate the model output for hateful responses as part of a repeatable validation process.\nWhich evaluator should you configure first?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Protected material"
+   },
+   {
+    "letter": "B",
+    "text": "Groundedness"
+   },
+   {
+    "letter": "C",
+    "text": "Indirect attacks"
+   },
+   {
+    "letter": "D",
+    "text": "Content safety"
+   }
+  ],
+  "correct": [
+   "D"
+  ]
+ },
+ {
+  "number": 43,
+  "type": "reveal",
+  "question_images": [
+   "assets/q43_q0.png"
+  ],
+  "answer_images": [
+   "assets/q43_a0.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 44,
+  "type": "reveal",
+  "question_images": [
+   "assets/q44_q0.png"
+  ],
+  "answer_images": [
+   "assets/q44_a0.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 45,
+  "type": "mc",
+  "multi": false,
+  "stem": "Your ML pipeline contains independent feature engineering steps that currently execute sequentially, increasing \noverall runtime. You want to optimize execution without modifying logic.\nWhat is the BEST solution?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Enable parallel step execution"
+   },
+   {
+    "letter": "B",
+    "text": "Reduce dataset size"
+   },
+   {
+    "letter": "C",
+    "text": "Increase compute size"
+   },
+   {
+    "letter": "D",
+    "text": "Combine all steps"
+   }
+  ],
+  "correct": [
+   "A"
+  ]
+ },
+ {
+  "number": 46,
+  "type": "mc",
+  "multi": false,
+  "stem": "You must ensure full reproducibility of experiments including dataset, code, and environment across multiple runs \nand workspaces. Which combination of practices is MOST appropriate?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Git only"
+   },
+   {
+    "letter": "B",
+    "text": "Logging metrics only"
+   },
+   {
+    "letter": "C",
+    "text": "Dataset versioning only"
+   },
+   {
+    "letter": "D",
+    "text": "Environment + dataset + code versioning"
+   }
+  ],
+  "correct": [
+   "D"
+  ]
+ },
+ {
+  "number": 47,
+  "type": "mc",
+  "multi": false,
+  "stem": "An Azure Machine Learning workspace contains multiple registered versions of a model that is used in production.\nAn older model version must no longer be deployable, but it must remain available for compliance review and potential \nrollback.\nYou need to change the state of the model version to meet the requirements.\nWhat should you do?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Archive the training dataset for the model version."
+   },
+   {
+    "letter": "B",
+    "text": "Delete the model version."
+   },
+   {
+    "letter": "C",
+    "text": "Unregister the model version."
+   },
+   {
+    "letter": "D",
+    "text": "Archive the model version."
+   }
+  ],
+  "correct": [
+   "D"
+  ]
+ },
+ {
+  "number": 48,
+  "type": "reveal",
+  "question_images": [
+   "assets/q48_q0.png",
+   "assets/q48_q1.png"
+  ],
+  "answer_images": [
+   "assets/q48_a0.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 49,
+  "type": "mc",
+  "multi": false,
+  "stem": "An organization maintains separate Azure Machine Learning workspaces for development and production.\nBoth environments must use the same validated assets without duplicating them.\nAssets must be shared across workspaces while maintaining centralized governance and version control.\nYou need to enable reuse of assets across workspaces without copying them.\nWhat should you do?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Enable workspace-level Git integration and sync assets between repositories."
+   },
+   {
+    "letter": "B",
+    "text": "Publish the asset as a pipeline component."
+   },
+   {
+    "letter": "C",
+    "text": "Create a shared Azure Machine Learning environment that includes the asset."
+   },
+   {
+    "letter": "D",
+    "text": "Publish the asset to an Azure Machine Learning registry."
+   }
+  ],
+  "correct": [
+   "D"
+  ]
+ },
+ {
+  "number": 50,
+  "type": "mc",
+  "multi": false,
+  "stem": "A team is experimenting with traditional models for a classification workflow in Azure Machine Learning.\nThe team requires a consistent way to manage assets that are created during experimentation.\nYou need to ensure that artifacts can be reused and governed across projects.\nWhich asset should you register?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Model"
+   },
+   {
+    "letter": "B",
+    "text": "Component"
+   },
+   {
+    "letter": "C",
+    "text": "Environment"
+   },
+   {
+    "letter": "D",
+    "text": "Pipeline"
+   }
+  ],
+  "correct": [
+   "A"
+  ]
+ },
+ {
+  "number": 51,
+  "type": "mc",
+  "multi": false,
+  "stem": "A team deploys a model to a real-time endpoint in Azure Machine Learning. You deploy some updates to the \nendpoint.\nThe endpoint returns errors after the new deployment is released.\nYou need to restore the service as quickly as possible.\nWhat should you do first?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Roll back traffic to the previous deployment."
+   },
+   {
+    "letter": "B",
+    "text": "Delete the endpoint and immediately redeploy it."
+   },
+   {
+    "letter": "C",
+    "text": "Change the authentication type to Azure Machine Learning token-based authentication."
+   },
+   {
+    "letter": "D",
+    "text": "Increase the compute size."
+   }
+  ],
+  "correct": [
+   "A"
+  ]
+ },
+ {
+  "number": 52,
+  "type": "mc",
+  "multi": false,
+  "stem": "You train models on GPU-enabled clusters but deploy them on CPU-based endpoints. Recently, inference failures \noccur due to incompatible dependencies. What should you do to ensure consistency?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Use batch endpoints"
+   },
+   {
+    "letter": "B",
+    "text": "Use same compute for training and inference"
+   },
+   {
+    "letter": "C",
+    "text": "Define and reuse environment configurations"
+   },
+   {
+    "letter": "D",
+    "text": "Increase endpoint compute size"
+   }
+  ],
+  "correct": [
+   "C"
+  ]
+ },
+ {
+  "number": 53,
+  "type": "mc",
+  "multi": false,
+  "stem": "Your model requires access to external APIs using sensitive credentials during inference. You must ensure \ncredentials are not exposed in code, logs, or environment variables. What should you implement?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Hardcode credentials"
+   },
+   {
+    "letter": "B",
+    "text": "Store in config files"
+   },
+   {
+    "letter": "C",
+    "text": "Use Azure Key Vault with managed identity"
+   },
+   {
+    "letter": "D",
+    "text": "Encrypt credentials locally"
+   }
+  ],
+  "correct": [
+   "C"
+  ]
+ },
+ {
+  "number": 54,
+  "type": "mc",
+  "multi": false,
+  "stem": "A pipeline step fails intermittently due to transient compute issues. You need to improve reliability without \nmodifying core logic or increasing cost significantly. What is the BEST approach?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Increase compute size"
+   },
+   {
+    "letter": "B",
+    "text": "Enable retry policy on pipeline step"
+   },
+   {
+    "letter": "C",
+    "text": "Run pipeline manually"
+   },
+   {
+    "letter": "D",
+    "text": "Remove failing step"
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 55,
+  "type": "mc",
+  "multi": false,
+  "stem": "A team is deploying machine learning models to a production inference endpoint in Azure Machine Learning.\nThe team requires a safe way to validate a new model version without disrupting existing users.\nYou need to recommend a deployment strategy for controlled testing of a new model version.\nWhat should you configure?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "traffic splitting between deployments"
+   },
+   {
+    "letter": "B",
+    "text": "the model asset version in the registry"
+   },
+   {
+    "letter": "C",
+    "text": "deployment to a separate staging endpoint"
+   },
+   {
+    "letter": "D",
+    "text": "an evaluation script in Azure Machine Learning"
+   }
+  ],
+  "correct": [
+   "A"
+  ]
+ },
+ {
+  "number": 56,
+  "type": "reveal",
+  "question_images": [
+   "assets/q56_q0.png"
+  ],
+  "answer_images": [
+   "assets/q56_a0.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 57,
+  "type": "reveal",
+  "question_images": [
+   "assets/q57_q0.png"
+  ],
+  "answer_images": [
+   "assets/q57_a0.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 58,
+  "type": "mc",
+  "multi": false,
+  "stem": "An organization validates generative AI applications during CI/CD Microsoft Foundry.\nEvaluation must run automatically and block releases when quality thresholds are NOT met.\nManual evaluation is no longer acceptable.\nEvaluation must use both predefined quality metrics and custom safety checks.\nYou need to implement an automated evaluation workflow that supports both built-in and custom metrics.\nWhat should you do?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Enable application tracing to collect runtime telemetry."
+   },
+   {
+    "letter": "B",
+    "text": "Review evaluation results manually after deployment."
+   },
+   {
+    "letter": "C",
+    "text": "Monitor latency metrics during model inference."
+   },
+   {
+    "letter": "D",
+    "text": "Implement an evaluation step by using GitHub Actions."
+   }
+  ],
+  "correct": [
+   "D"
+  ]
+ },
+ {
+  "number": 59,
+  "type": "mc",
+  "multi": false,
+  "stem": "You work in Microsoft Foundry with a prompt flow.\nYou must manually evaluate prompts and compare results across prompt variants.\nYou need to capture the inputs, outputs, token usage, and latencies for each flow run for the evaluation.\nSolution: Create prompt variants and compare their outputs in the Evaluation experience.\nDoes the solution meet the goal?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Yes"
+   },
+   {
+    "letter": "B",
+    "text": "No"
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 60,
+  "type": "mc",
+  "multi": false,
+  "stem": "Multiple teams need access to approved models with version tracking, lineage, and governance controls. Models \nmust be discoverable and reusable across projects. What Azure ML feature should you use?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Blob storage containers"
+   },
+   {
+    "letter": "B",
+    "text": "Model registry"
+   },
+   {
+    "letter": "C",
+    "text": "Git repositories"
+   },
+   {
+    "letter": "D",
+    "text": "Data lake"
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 61,
+  "type": "mc",
+  "multi": true,
+  "stem": "A team is validating a generative AI assistant for a company. The assistant generates responses by using \ninternal knowledge sources.\nThe company requires assurance that responses are accurate, supported by sources, and related to the user \nprompts before enabling production access.\nYou need to implement quality metrics that confirm the assistant produces reliable and meaningful responses.\nWhich two evaluation metrics should you use? Each correct answer presents part of the solution.\nNOTE: Each correct selection is worth one point.",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Groundedness"
+   },
+   {
+    "letter": "B",
+    "text": "Relevance"
+   },
+   {
+    "letter": "C",
+    "text": "Harmfulness"
+   },
+   {
+    "letter": "D",
+    "text": "Fairness"
+   },
+   {
+    "letter": "E",
+    "text": "Tone"
+   }
+  ],
+  "correct": [
+   "A",
+   "B"
+  ]
+ },
+ {
+  "number": 62,
+  "type": "mc",
+  "multi": false,
+  "stem": "Note: This question is part of a series of questions that present the same scenario. Each question in the \nseries contains a unique solution that might meet the stated goals. Some question sets might have more than one \ncorrect solution, while others might not have a correct solution.\nAfter you answer a question in this section, you will NOT be able to return to it. As a result, these questions will \nnot appear on the review screen.\nYou manage an Azure Machine Learning workspace. The Python script named script.py reads an argument named \ntraining_data. The training_data argument specifies the path to the training data in a file named dataset1.csv.\nYou plan to run the script.py Python script as a command job that trains a machine learning model.\nYou need to provide the command to pass the path for the dataset as a parameter value when you submit the \nscript as a training job.\nSolution: python train.py --training_data training_data\nDoes the solution meet the goal?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "No"
+   },
+   {
+    "letter": "B",
+    "text": "Yes"
+   }
+  ],
+  "correct": [
+   "A"
+  ]
+ },
+ {
+  "number": 63,
+  "type": "reveal",
+  "question_images": [
+   "assets/q63_q0.png"
+  ],
+  "answer_images": [
+   "assets/q63_a0.png"
+  ],
+  "label": "Drag and Drop"
+ },
+ {
+  "number": 64,
+  "type": "mc",
+  "multi": false,
+  "stem": "Note: This question is part of a series of questions that present the same scenario. Each question in the series \ncontains a unique solution that might meet the stated goals. Some question sets might have more than one correct \nsolution, while others might not have a correct solution.\nAfter you answer a question in this section, you will NOT be able to return to it. As a result, these questions will not \nappear on the review screen.\nYou manage an Azure Machine Learning workspace. The Python script named script.py reads an argument named \ntraining_data. The training_data argument specifies the path to the training data in a file named dataset1.csv.\nYou plan to run the script.py Python script as a command job that trains a machine learning model.\nYou need to provide the command to pass the path for the dataset as a parameter value when you submit the script \nas a training job.\nSolution: python script.py --trainingdata ${{inputs.training_data}}\nDoes the solution meet the goal?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "No"
+   },
+   {
+    "letter": "B",
+    "text": "Yes"
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 65,
+  "type": "reveal",
+  "question_images": [
+   "assets/q65_q0.png"
+  ],
+  "answer_images": [
+   "assets/q65_a0.png"
+  ],
+  "label": "Drag and Drop"
+ },
+ {
+  "number": 66,
+  "type": "mc",
+  "multi": false,
+  "stem": "Note: This question is part of a series of questions that present the same scenario. Each question in the \nseries contains a unique solution that might meet the stated goals. Some question sets might have more than one \ncorrect solution, while others might not have a correct solution.\nAfter you answer a question in this section, you will NOT be able to return to it. As a result, these questions will not \nappear on the review screen.\nYou manage an Azure Machine Learning workspace. The Python script named script.py reads an argument named \ntraining_data. The training_data argument specifies the path to the training data in a file named dataset1.csv.\nYou plan to run the script.py Python script as a command job that trains a machine learning model.\nYou need to provide the command to pass the path for the dataset as a parameter value when you submit the \nscript as a training job.\nSolution: python script.py dataset1.csv\nDoes the solution meet the goal?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "No"
+   },
+   {
+    "letter": "B",
+    "text": "Yes"
+   }
+  ],
+  "correct": [
+   "A"
+  ]
+ },
+ {
+  "number": 67,
+  "type": "reveal",
+  "question_images": [
+   "assets/q67_q0.png"
+  ],
+  "answer_images": [
+   "assets/q67_a0.png"
+  ],
+  "label": "Drag and Drop"
+ },
+ {
+  "number": 68,
+  "type": "mc",
+  "multi": false,
+  "stem": "You manage an Azure Machine Learning workspace.\nYou need to define an environment from a Docker image by using the Azure Machine Learning Python SDK v2.\nWhich parameter should you use?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "image"
+   },
+   {
+    "letter": "B",
+    "text": "properties"
+   },
+   {
+    "letter": "C",
+    "text": "conda_file"
+   },
+   {
+    "letter": "D",
+    "text": "build"
+   }
+  ],
+  "correct": [
+   "A"
+  ]
+ },
+ {
+  "number": 69,
+  "type": "mc",
+  "multi": false,
+  "stem": "A team plans to deploy a large foundation model in Microsoft Foundry as part of a new enterprise AI capability.\nDifferent business units across the team's organization will access the model from various internal applications.\nYou need to deploy a foundation model by minimizing latency.\nWhich deployment type should you use?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Data Zone Batch"
+   },
+   {
+    "letter": "B",
+    "text": "Developer"
+   },
+   {
+    "letter": "C",
+    "text": "Data Zone Standard"
+   },
+   {
+    "letter": "D",
+    "text": "Global Batch"
+   }
+  ],
+  "correct": [
+   "C"
+  ]
+ },
+ {
+  "number": 70,
+  "type": "mc",
+  "multi": true,
+  "stem": "You create a workspace by using Azure Machine Learning Studio.\nYou must run a Python SDK v2 notebook in the workspace by using Azure Machine Learning Studio.\nYou need to reset the state of the notebook.\nWhich three actions should you use? Each correct answer presents a complete solution.\nNOTE: Each correct selection is worth one point.",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Change the compute."
+   },
+   {
+    "letter": "B",
+    "text": "stop the current kernel."
+   },
+   {
+    "letter": "C",
+    "text": "Reset the compute."
+   },
+   {
+    "letter": "D",
+    "text": "Navigate to another section of the workspace."
+   },
+   {
+    "letter": "E",
+    "text": "Change the current kernel."
+   }
+  ],
+  "correct": [
+   "B",
+   "C",
+   "E"
+  ]
+ },
+ {
+  "number": 71,
+  "type": "reveal",
+  "question_images": [
+   "assets/q71_q0.png"
+  ],
+  "answer_images": [
+   "assets/q71_a0.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 72,
+  "type": "mc",
+  "multi": false,
+  "stem": "A data science team plans to evaluate multiple hyperparameter values automatically while training a model in \nAzure Machine Learning.\nThe tuning process must run multiple training trials without manually modifying the training script for each run.\nYou need to automate hyperparameter tuning for the training job.\nWhat should you do?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Run a single training job with fixed hyperparameters."
+   },
+   {
+    "letter": "B",
+    "text": "Select hyperparameters based only on default model settings."
+   },
+   {
+    "letter": "C",
+    "text": "Adjust hyperparameters after model deployment."
+   },
+   {
+    "letter": "D",
+    "text": "Create a tuning job that runs multiple trials with different parameter values."
+   }
+  ],
+  "correct": [
+   "D"
+  ]
+ },
+ {
+  "number": 73,
+  "type": "reveal",
+  "question_images": [
+   "assets/q73_q0.png"
+  ],
+  "answer_images": [
+   "assets/q73_a0.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 74,
+  "type": "reveal",
+  "question_images": [
+   "assets/q74_q0.png"
+  ],
+  "answer_images": [
+   "assets/q74_a0.png",
+   "assets/q74_a1.png"
+  ],
+  "label": "Hotspot"
+ },
+ {
+  "number": 75,
+  "type": "reveal",
+  "question_images": [
+   "assets/q75_q0.png"
+  ],
+  "answer_images": [
+   "assets/q75_a0.png",
+   "assets/q75_a1.png",
+   "assets/q75_a2.png"
+  ],
+  "label": "Hotspot"
+ },
+ {
+  "number": 76,
+  "type": "reveal",
+  "question_images": [
+   "assets/q76_q0.png",
+   "assets/q76_q1.png"
+  ],
+  "answer_images": [
+   "assets/q76_a0.png",
+   "assets/q76_a1.png",
+   "assets/q76_a2.png",
+   "assets/q76_a3.png"
+  ],
+  "label": "Hotspot"
+ },
+ {
+  "number": 77,
+  "type": "reveal",
+  "question_images": [
+   "assets/q77_q0.png"
+  ],
+  "answer_images": [
+   "assets/q77_a0.png",
+   "assets/q77_a1.png",
+   "assets/q77_a2.png"
+  ],
+  "label": "Drag and Drop"
+ },
+ {
+  "number": 78,
+  "type": "reveal",
+  "question_images": [
+   "assets/q78_q0.png"
+  ],
+  "answer_images": [
+   "assets/q78_a0.png",
+   "assets/q78_a1.png"
+  ],
+  "label": "Drag and Drop"
+ },
+ {
+  "number": 79,
+  "type": "reveal",
+  "question_images": [
+   "assets/q79_q0.png"
+  ],
+  "answer_images": [
+   "assets/q79_a0.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 80,
+  "type": "reveal",
+  "question_images": [
+   "assets/q80_q0.png"
+  ],
+  "answer_images": [
+   "assets/q80_a0.png",
+   "assets/q80_a1.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 81,
+  "type": "reveal",
+  "question_images": [
+   "assets/q81_q0.png"
+  ],
+  "answer_images": [
+   "assets/q81_a0.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 82,
+  "type": "reveal",
+  "question_images": [
+   "assets/q82_q0.png"
+  ],
+  "answer_images": [
+   "assets/q82_a0.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 83,
+  "type": "reveal",
+  "question_images": [
+   "assets/q83_q0.png"
+  ],
+  "answer_images": [
+   "assets/q83_a0.png",
+   "assets/q83_a1.png",
+   "assets/q83_a2.png",
+   "assets/q83_a3.png",
+   "assets/q83_a4.png"
+  ],
+  "label": "Hotspot"
+ },
+ {
+  "number": 84,
+  "type": "reveal",
+  "question_images": [
+   "assets/q84_q0.png"
+  ],
+  "answer_images": [
+   "assets/q84_a0.png",
+   "assets/q84_a1.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 85,
+  "type": "reveal",
+  "question_images": [
+   "assets/q85_q0.png"
+  ],
+  "answer_images": [
+   "assets/q85_a0.png",
+   "assets/q85_a1.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 86,
+  "type": "reveal",
+  "question_images": [
+   "assets/q86_q0.png"
+  ],
+  "answer_images": [
+   "assets/q86_a0.png",
+   "assets/q86_a1.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 87,
+  "type": "reveal",
+  "question_images": [
+   "assets/q87_q0.png"
+  ],
+  "answer_images": [
+   "assets/q87_a0.png",
+   "assets/q87_a1.png",
+   "assets/q87_a2.png"
+  ],
+  "label": "Drag and Drop"
+ },
+ {
+  "number": 88,
+  "type": "reveal",
+  "question_images": [
+   "assets/q88_q0.png"
+  ],
+  "answer_images": [
+   "assets/q88_a0.png",
+   "assets/q88_a1.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 89,
+  "type": "reveal",
+  "question_images": [
+   "assets/q89_q0.png"
+  ],
+  "answer_images": [
+   "assets/q89_a0.png",
+   "assets/q89_a1.png"
+  ],
+  "label": "Drag and Drop"
+ },
+ {
+  "number": 90,
+  "type": "reveal",
+  "question_images": [
+   "assets/q90_q0.png",
+   "assets/q90_q1.png"
+  ],
+  "answer_images": [
+   "assets/q90_a0.png",
+   "assets/q90_a1.png",
+   "assets/q90_a2.png",
+   "assets/q90_a3.png"
+  ],
+  "label": "Hotspot"
+ },
+ {
+  "number": 91,
+  "type": "reveal",
+  "question_images": [
+   "assets/q91_q0.png"
+  ],
+  "answer_images": [
+   "assets/q91_a0.png",
+   "assets/q91_a1.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 92,
+  "type": "reveal",
+  "question_images": [
+   "assets/q92_q0.png"
+  ],
+  "answer_images": [
+   "assets/q92_a0.png",
+   "assets/q92_a1.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 93,
+  "type": "reveal",
+  "question_images": [
+   "assets/q93_q0.png"
+  ],
+  "answer_images": [
+   "assets/q93_a0.png",
+   "assets/q93_a1.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 94,
+  "type": "reveal",
+  "question_images": [
+   "assets/q94_q0.png"
+  ],
+  "answer_images": [
+   "assets/q94_a0.png",
+   "assets/q94_a1.png"
+  ],
+  "label": "Hotspot"
+ },
+ {
+  "number": 95,
+  "type": "reveal",
+  "question_images": [
+   "assets/q95_q0.png"
+  ],
+  "answer_images": [
+   "assets/q95_a0.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 96,
+  "type": "reveal",
+  "question_images": [
+   "assets/q96_q0.png"
+  ],
+  "answer_images": [
+   "assets/q96_a0.png",
+   "assets/q96_a1.png",
+   "assets/q96_a2.png"
+  ],
+  "label": "Drag and Drop"
+ },
+ {
+  "number": 97,
+  "type": "reveal",
+  "question_images": [
+   "assets/q97_q0.png"
+  ],
+  "answer_images": [
+   "assets/q97_a0.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 98,
+  "type": "reveal",
+  "question_images": [
+   "assets/q98_q0.png"
+  ],
+  "answer_images": [
+   "assets/q98_a0.png",
+   "assets/q98_a1.png",
+   "assets/q98_a2.png"
+  ],
+  "label": "Drag and Drop"
+ },
+ {
+  "number": 99,
+  "type": "reveal",
+  "question_images": [
+   "assets/q99_q0.png"
+  ],
+  "answer_images": [
+   "assets/q99_a0.png",
+   "assets/q99_a1.png",
+   "assets/q99_a2.png"
+  ],
+  "label": "Drag and Drop"
+ },
+ {
+  "number": 100,
+  "type": "reveal",
+  "question_images": [
+   "assets/q100_q0.png"
+  ],
+  "answer_images": [
+   "assets/q100_a0.png",
+   "assets/q100_a1.png",
+   "assets/q100_a2.png"
+  ],
+  "label": "Drag and Drop"
+ },
+ {
+  "number": 102,
+  "type": "reveal",
+  "question_images": [
+   "assets/q102_q0.png"
+  ],
+  "answer_images": [
+   "assets/q102_a0.png",
+   "assets/q102_a1.png",
+   "assets/q102_a2.png"
+  ],
+  "label": "Hotspot"
+ },
+ {
+  "number": 103,
+  "type": "reveal",
+  "question_images": [
+   "assets/q103_q0.png"
+  ],
+  "answer_images": [
+   "assets/q103_a0.png",
+   "assets/q103_a1.png",
+   "assets/q103_a2.png"
+  ],
+  "label": "Hotspot"
+ },
+ {
+  "number": 104,
+  "type": "reveal",
+  "question_images": [
+   "assets/q104_q0.png"
+  ],
+  "answer_images": [
+   "assets/q104_a0.png",
+   "assets/q104_a1.png",
+   "assets/q104_a2.png"
+  ],
+  "label": "Drag and Drop"
+ },
+ {
+  "number": 106,
+  "type": "reveal",
+  "question_images": [
+   "assets/q106_q0.png"
+  ],
+  "answer_images": [
+   "assets/q106_a0.png",
+   "assets/q106_a1.png",
+   "assets/q106_a2.png"
+  ],
+  "label": "Drag and Drop"
+ },
+ {
+  "number": 107,
+  "type": "reveal",
+  "question_images": [
+   "assets/q107_q0.png"
+  ],
+  "answer_images": [
+   "assets/q107_a0.png",
+   "assets/q107_a1.png",
+   "assets/q107_a2.png"
+  ],
+  "label": "Hotspot"
+ },
+ {
+  "number": 108,
+  "type": "reveal",
+  "question_images": [
+   "assets/q108_q0.png"
+  ],
+  "answer_images": [
+   "assets/q108_a0.png",
+   "assets/q108_a1.png",
+   "assets/q108_a2.png"
+  ],
+  "label": "Hotspot Question"
+ },
+ {
+  "number": 109,
+  "type": "mc",
+  "multi": false,
+  "stem": "You have a Microsoft Foundry project and a CSV file stored in Azure Blob Storage.\nYou plan to add the CSV file as the grounding data to the project for RAG by using the file data type.\nYou need to specify the URL schema to designate the blob location.\nWhich URL schema should you specify?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "hdfs"
+   },
+   {
+    "letter": "B",
+    "text": "nfs"
+   },
+   {
+    "letter": "C",
+    "text": "file"
+   },
+   {
+    "letter": "D",
+    "text": "wasbs"
+   }
+  ],
+  "correct": [
+   "D"
+  ]
+ },
+ {
+  "number": 110,
+  "type": "reveal",
+  "question_images": [
+   "assets/q110_q0.png"
+  ],
+  "answer_images": [
+   "assets/q110_a0.png",
+   "assets/q110_a1.png"
+  ],
+  "label": "Hotspot Question"
+ },
+ {
+  "number": 111,
+  "type": "mc",
+  "multi": true,
+  "stem": "You need to refine a GPT-5 model so that its performance and behavior align with the technical and business \nrequirements of Fabrikam Inc.\nWhich two Foundry strategies should you apply? Each correct answer presents a complete solution. Choose two.\nNOTE: Each correct selection is worth one point.",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Supervised fine-tuning"
+   },
+   {
+    "letter": "B",
+    "text": "Evaluations"
+   },
+   {
+    "letter": "C",
+    "text": "Guardrails"
+   },
+   {
+    "letter": "D",
+    "text": "Synthetic data generation 111) You need to refine a GPT-5 model so that its performance and behavior align with the technical and business requirements of Fabrikam Inc. Which two Foundry strategies should you apply? Each correct answer presents a complete solution. Choose two. NOTE: Each correct selection is worth one point."
+   },
+   {
+    "letter": "A",
+    "text": "Supervised fine-tuning"
+   },
+   {
+    "letter": "B",
+    "text": "Evaluations"
+   },
+   {
+    "letter": "C",
+    "text": "Guardrails"
+   },
+   {
+    "letter": "D",
+    "text": "Synthetic data generation Answer: A,B Scenario, Technical Requirements: Improve RAG-based solution output quality. Apply advanced fine-tuning techniques only when prompt engineering is insufficient Business Requirements: Provide a conversational interface that answers analytics questions by using internal documents and datasets. The two Foundry strategies that would be most useful in this scenario are Evaluations and Supervised fine-tuning. Evaluations: This strategy is critical for improving RAG-based solution output quality. It provides systemic measurement to test how changes to your data, prompts, or retrieval chunks impact the accuracy, relevance, and groundedness of the model's answers before moving to more complex methods."
+   }
+  ],
+  "correct": [
+   "A",
+   "B"
+  ]
+ },
+ {
+  "number": 112,
+  "type": "reveal",
+  "question_images": [
+   "assets/q112_q0.png"
+  ],
+  "answer_images": [
+   "assets/q112_a0.png",
+   "assets/q112_a1.png"
+  ],
+  "label": "Hotspot Question"
+ },
+ {
+  "number": 113,
+  "type": "reveal",
+  "question_images": [
+   "assets/q113_q0.png"
+  ],
+  "answer_images": [
+   "assets/q113_a0.png",
+   "assets/q113_a1.png",
+   "assets/q113_a2.png"
+  ],
+  "label": "Hotspot Question"
+ },
+ {
+  "number": 114,
+  "type": "mc",
+  "multi": false,
+  "stem": "You manage an Azure Machine Learning workspace. You have a folder that contains a CSV file.\nThe folder is registered as a folder data asset.\nYou plan to use the folder data asset for data wrangling during interactive development.\nYou need to access and load the folder data asset into a Pandas data frame.\nWhich method should you use to achieve this goal?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "mltable.load()"
+   },
+   {
+    "letter": "B",
+    "text": "mltable.from_delimited_files()"
+   },
+   {
+    "letter": "C",
+    "text": "mltable.from_parquet_files()"
+   },
+   {
+    "letter": "D",
+    "text": "mltable.from_delta_lake() 114) You manage an Azure Machine Learning workspace. You have a folder that contains a CSV file. The folder is registered as a folder data asset. You plan to use the folder data asset for data wrangling during interactive development. You need to access and load the folder data asset into a Pandas data frame. Which method should you use to achieve this goal?"
+   },
+   {
+    "letter": "A",
+    "text": "mltable.load()"
+   },
+   {
+    "letter": "B",
+    "text": "mltable.from_delimited_files()"
+   },
+   {
+    "letter": "C",
+    "text": "mltable.from_parquet_files()"
+   },
+   {
+    "letter": "D",
+    "text": "mltable.from_delta_lake() Answer: B"
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 115,
+  "type": "mc",
+  "multi": false,
+  "stem": "You are preparing training data for a fine-tuning job in Microsoft Foundry.\nReal production conversations cannot be used due to compliance requirements.\nYou need to generate synthetic interaction data that can be used for fine-tuning a generative model.\nWhat should you do?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Export model evaluation logs and use them directly as training data."
+   },
+   {
+    "letter": "B",
+    "text": "Use a simulator to generate prompt-response interaction data that matches the target task."
+   },
+   {
+    "letter": "C",
+    "text": "Enable A/B testing and capture live user traffic for data generation."
+   },
+   {
+    "letter": "D",
+    "text": "Run a simulator to produce telemetry logs and trace data from user interactions. 115) You are preparing training data for a fine-tuning job in Microsoft Foundry. Real production conversations cannot be used due to compliance requirements. You need to generate synthetic interaction data that can be used for fine-tuning a generative model. What should you do?"
+   },
+   {
+    "letter": "A",
+    "text": "Export model evaluation logs and use them directly as training data."
+   },
+   {
+    "letter": "B",
+    "text": "Use a simulator to generate prompt-response interaction data that matches the target task."
+   },
+   {
+    "letter": "C",
+    "text": "Enable A/B testing and capture live user traffic for data generation."
+   },
+   {
+    "letter": "D",
+    "text": "Run a simulator to produce telemetry logs and trace data from user interactions. Answer: B"
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 116,
+  "type": "mc",
+  "multi": false,
+  "stem": "A data science team plans to evaluate multiple hyperparameter values automatically while \ntraining a model in Azure Machine Learning.\nThe tuning process must run multiple training trials without manually modifying the training script for \neach run.\nYou need to automate hyperparameter tuning for the training job.\nWhat should you do?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Manually change hyperparameter values between training runs."
+   },
+   {
+    "letter": "B",
+    "text": "Create a tuning job that runs multiple trials with different parameter values."
+   },
+   {
+    "letter": "C",
+    "text": "Duplicate the training script for each parameter combination."
+   },
+   {
+    "letter": "D",
+    "text": "Adjust hyperparameters after model deployment. 116) A data science team plans to evaluate multiple hyperparameter values automatically while training a model in Azure Machine Learning. The tuning process must run multiple training trials without manually modifying the training script for each run. You need to automate hyperparameter tuning for the training job. What should you do?"
+   },
+   {
+    "letter": "A",
+    "text": "Manually change hyperparameter values between training runs."
+   },
+   {
+    "letter": "B",
+    "text": "Create a tuning job that runs multiple trials with different parameter values."
+   },
+   {
+    "letter": "C",
+    "text": "Duplicate the training script for each parameter combination."
+   },
+   {
+    "letter": "D",
+    "text": "Adjust hyperparameters after model deployment. Answer: B"
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 117,
+  "type": "mc",
+  "multi": false,
+  "stem": "Note: This question is part of a series of questions that present the same scenario. Each question in the series contains \na unique solution that might meet the stated goals. Some question sets might have more than one correct solution, while \nothers might not have a correct solution.\nAfter you answer a question in this section, you will NOT be able to return to it. As a result, these questions will not appear on \nthe review screen.\nYou manage a Retrieval-Augmented Generation (RAG) application built on Microsoft Foundry.\nThe application retrieves documents from an indexed knowledge base and generates answers for internal users.\nRecent feedback indicates that answers are fluent but sometimes include information that is not supported by the \ndocuments that were retrieved.\nYou need to evaluate whether a proposed change improves RAG answer quality by using supported and measurable \ntechniques.\nSolution: Compare embedding vector dimensions used by the retrieval pipeline before and after the change.\nDoes the solution meet the goal?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Yes"
+   },
+   {
+    "letter": "B",
+    "text": "No 117) Note: This question is part of a series of questions that present the same scenario. Each question in the series contains a unique solution that might meet the stated goals. Some question sets might have more than one correct solution, while others might not have a correct solution. After you answer a question in this section, you will NOT be able to return to it. As a result, these questions will not appear on the review screen. You manage a Retrieval-Augmented Generation (RAG) application built on Microsoft Foundry. The application retrieves documents from an indexed knowledge base and generates answers for internal users. Recent feedback indicates that answers are fluent but sometimes include information that is not supported by the documents that were retrieved. You need to evaluate whether a proposed change improves RAG answer quality by using supported and measurable techniques. Solution: Compare embedding vector dimensions used by the retrieval pipeline before and after the change. Does the solution meet the goal?"
+   },
+   {
+    "letter": "A",
+    "text": "Yes"
+   },
+   {
+    "letter": "B",
+    "text": "No Answer: B"
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 118,
+  "type": "reveal",
+  "question_images": [
+   "assets/q118_q0.png"
+  ],
+  "answer_images": [
+   "assets/q118_a0.png",
+   "assets/q118_a1.png",
+   "assets/q118_a2.png"
+  ],
+  "label": "Hotspot Question"
+ },
+ {
+  "number": 119,
+  "type": "reveal",
+  "question_images": [
+   "assets/q119_q0.png"
+  ],
+  "answer_images": [
+   "assets/q119_a0.png",
+   "assets/q119_a1.png",
+   "assets/q119_a2.png"
+  ],
+  "label": "Hotspot Question"
+ },
+ {
+  "number": 120,
+  "type": "reveal",
+  "question_images": [
+   "assets/q120_q0.png"
+  ],
+  "answer_images": [
+   "assets/q120_a0.png",
+   "assets/q120_a1.png",
+   "assets/q120_a2.png"
+  ],
+  "label": "Drag and Drop"
+ },
+ {
+  "number": 121,
+  "type": "reveal",
+  "question_images": [
+   "assets/q121_q0.png"
+  ],
+  "answer_images": [
+   "assets/q121_a0.png",
+   "assets/q121_a1.png",
+   "assets/q121_a2.png"
+  ],
+  "label": "Hotspot Question"
+ },
+ {
+  "number": 122,
+  "type": "mc",
+  "multi": false,
+  "stem": "Note: This question is part of a series of questions that present the same scenario. Each question in the series \ncontains a unique solution that might meet the stated goals. Some question sets might have more than one correct \nsolution, while others might not have a correct solution.\nAfter you answer a question in this section, you will NOT be able to return to it. As a result, these questions will not appear \non the review screen.\nYou manage a Retrieval-Augmented Generation (RAG) application built on Microsoft Foundry.\nThe application retrieves documents from an indexed knowledge base and generates answers for internal users.\nRecent feedback indicates that answers are fluent but sometimes include information that is not supported by the \ndocuments that were retrieved.\nYou need to evaluate whether a proposed change improves RAG answer quality by using supported and measurable \ntechniques.\nSolution: Review user feedback comments collected after deployment to determine whether answers appear more \naccurate.\nDoes the solution meet the goal?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Yes"
+   },
+   {
+    "letter": "B",
+    "text": "No 122) Note: This question is part of a series of questions that present the same scenario. Each question in the series contains a unique solution that might meet the stated goals. Some question sets might have more than one correct solution, while others might not have a correct solution. After you answer a question in this section, you will NOT be able to return to it. As a result, these questions will not appear on the review screen. You manage a Retrieval-Augmented Generation (RAG) application built on Microsoft Foundry. The application retrieves documents from an indexed knowledge base and generates answers for internal users. Recent feedback indicates that answers are fluent but sometimes include information that is not supported by the documents that were retrieved. You need to evaluate whether a proposed change improves RAG answer quality by using supported and measurable techniques. Solution: Review user feedback comments collected after deployment to determine whether answers appear more accurate. Does the solution meet the goal?"
+   },
+   {
+    "letter": "A",
+    "text": "Yes"
+   },
+   {
+    "letter": "B",
+    "text": "No Answer: A"
+   }
+  ],
+  "correct": [
+   "A"
+  ]
+ },
+ {
+  "number": 123,
+  "type": "mc",
+  "multi": false,
+  "stem": "An organization operates a customer-facing generative AI chat service deployed by using Microsoft Foundry. The \nservice processes a predictable, sustained volume of requests. The service must meet strict response time service-\nlevel agreements (SLAs) during peak business hours.\nThe organization requires that:\n- Model responses remain consistent during sustained high traffic.\n- Latency does not degrade during peak usage periods.\n- Capacity planning avoids throttling and unpredictable performance.\nYou need to ensure that the deployed foundation model can reliably handle sustained, high- volume traffic while \nmeeting performance and availability requirements.\nWhat should you do?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Implement spillover traffic management for excess demand."
+   },
+   {
+    "letter": "B",
+    "text": "Increase batch size for inference requests."
+   },
+   {
+    "letter": "C",
+    "text": "Optimize prompts to reduce token usage."
+   },
+   {
+    "letter": "D",
+    "text": "Deploy the model by using serverless API endpoints. 123) An organization operates a customer-facing generative AI chat service deployed by using Microsoft Foundry. The service processes a predictable, sustained volume of requests. The service must meet strict response time service- level agreements (SLAs) during peak business hours. The organization requires that: - Model responses remain consistent during sustained high traffic. - Latency does not degrade during peak usage periods. - Capacity planning avoids throttling and unpredictable performance. You need to ensure that the deployed foundation model can reliably handle sustained, high- volume traffic while meeting performance and availability requirements. What should you do?"
+   },
+   {
+    "letter": "A",
+    "text": "Implement spillover traffic management for excess demand."
+   },
+   {
+    "letter": "B",
+    "text": "Increase batch size for inference requests."
+   },
+   {
+    "letter": "C",
+    "text": "Optimize prompts to reduce token usage."
+   },
+   {
+    "letter": "D",
+    "text": "Deploy the model by using serverless API endpoints. Answer: A"
+   }
+  ],
+  "correct": [
+   "A"
+  ]
+ },
+ {
+  "number": 124,
+  "type": "reveal",
+  "question_images": [
+   "assets/q124_q0.png"
+  ],
+  "answer_images": [
+   "assets/q124_a0.png",
+   "assets/q124_a1.png"
+  ],
+  "label": "Drag and Drop"
+ },
+ {
+  "number": 125,
+  "type": "reveal",
+  "question_images": [
+   "assets/q125_q0.png"
+  ],
+  "answer_images": [
+   "assets/q125_a0.png",
+   "assets/q125_a1.png",
+   "assets/q125_a2.png"
+  ],
+  "label": "Hotspot Question"
+ },
+ {
+  "number": 126,
+  "type": "mc",
+  "multi": true,
+  "stem": "You manage an Azure Machine Learning workspace. You build a model for which you must configure a \nResponsible Al dashboard.\nBased on what you learn from the dashboard, you must perform the following activities:\n- Determine what must be done to get a desirable outcome from the\nmodel.\n- Identify the features that have the most direct effect on your\noutcome of interest.\nYou need to select the components to use for the Responsible Al dashboard configuration.\nWhich two components should you add? Each correct answer presents part of the solution.\nNOTE: Each correct selection is worth one point.",
+  "options": [
+   {
+    "letter": "A",
+    "text": "counterfactuals"
+   },
+   {
+    "letter": "B",
+    "text": "error analysis"
+   },
+   {
+    "letter": "C",
+    "text": "causal"
+   },
+   {
+    "letter": "D",
+    "text": "explanation 126) You manage an Azure Machine Learning workspace. You build a model for which you must configure a Responsible Al dashboard. Based on what you learn from the dashboard, you must perform the following activities: - Determine what must be done to get a desirable outcome from the model. - Identify the features that have the most direct effect on your outcome of interest. You need to select the components to use for the Responsible Al dashboard configuration. Which two components should you add? Each correct answer presents part of the solution. NOTE: Each correct selection is worth one point."
+   },
+   {
+    "letter": "A",
+    "text": "counterfactuals"
+   },
+   {
+    "letter": "B",
+    "text": "error analysis"
+   },
+   {
+    "letter": "C",
+    "text": "causal"
+   },
+   {
+    "letter": "D",
+    "text": "explanation Answer: A,C"
+   }
+  ],
+  "correct": [
+   "A",
+   "C"
+  ]
+ },
+ {
+  "number": 127,
+  "type": "mc",
+  "multi": false,
+  "stem": "You are a data scientist working for a hotel booking website company. You use the Azure Machine Learning \nservice to train a model that identifies fraudulent transactions.\nYou must deploy the model to an Azure Machine Learning online endpoint by using the Azure Machine Learning \nPython SDK v2. The deployed model must return real-time predictions of fraud based on transaction data input.\nYou need to create the script that is specified as the scoring_script parameter for the CodeConfiguration class used \nto deploy the model.\nWhat should the entry script do?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Create a Conda environment for the online endpoint compute and install the necessary Python packages."
+   },
+   {
+    "letter": "B",
+    "text": "Register the model with appropriate tags and properties."
+   },
+   {
+    "letter": "C",
+    "text": "Load the model and use it to predict labels from input data."
+   },
+   {
+    "letter": "D",
+    "text": "Start a node on the inference cluster where the model is deployed."
+   },
+   {
+    "letter": "E",
+    "text": "Specify the number of cores and the amount of memory required for the online endpoint compute."
+   }
+  ],
+  "correct": [
+   "C"
+  ]
+ },
+ {
+  "number": 128,
+  "type": "reveal",
+  "question_images": [
+   "assets/q128_q0.png"
+  ],
+  "answer_images": [
+   "assets/q128_a0.png",
+   "assets/q128_a1.png",
+   "assets/q128_a2.png"
+  ],
+  "label": "Drag and Drop"
+ },
+ {
+  "number": 129,
+  "type": "mc",
+  "multi": false,
+  "stem": "Note: This question is part of a series of questions that present the same scenario. Each question in the series \ncontains a unique solution that might meet the stated goals. Some question sets might have more than one correct \nsolution, while others might not have a correct solution.\nAfter you answer a question in this section, you will NOT be able to return to it. As a result, these questions will not \nappear on the review screen.\nAn organization provisions Azure Machine Learning workspaces for development, test, and production \nenvironments.\nEach environment must be deployed consistently and updated through source control. The deployment process \nmust be automated, repeatable, and auditable.\nYou need to deploy Azure Machine Learning resources in a consistent and controlled manner.\nSolution: Clone an existing Azure Machine Learning workspace to create additional environments.\nDoes the solution meet the goal?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Yes"
+   },
+   {
+    "letter": "B",
+    "text": "No 129) Note: This question is part of a series of questions that present the same scenario. Each question in the series contains a unique solution that might meet the stated goals. Some question sets might have more than one correct solution, while others might not have a correct solution. After you answer a question in this section, you will NOT be able to return to it. As a result, these questions will not appear on the review screen. An organization provisions Azure Machine Learning workspaces for development, test, and production environments. Each environment must be deployed consistently and updated through source control. The deployment process must be automated, repeatable, and auditable. You need to deploy Azure Machine Learning resources in a consistent and controlled manner. Solution: Clone an existing Azure Machine Learning workspace to create additional environments. Does the solution meet the goal?"
+   },
+   {
+    "letter": "A",
+    "text": "Yes"
+   },
+   {
+    "letter": "B",
+    "text": "No Answer: B"
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 130,
+  "type": "reveal",
+  "question_images": [
+   "assets/q130_q0.png"
+  ],
+  "answer_images": [
+   "assets/q130_a0.png",
+   "assets/q130_a1.png",
+   "assets/q130_a2.png"
+  ],
+  "label": "Drag and Drop"
+ },
+ {
+  "number": 131,
+  "type": "reveal",
+  "question_images": [
+   "assets/q131_q0.png"
+  ],
+  "answer_images": [
+   "assets/q131_a0.png",
+   "assets/q131_a1.png",
+   "assets/q131_a2.png"
+  ],
+  "label": "Hotspot Question"
+ },
+ {
+  "number": 132,
+  "type": "mc",
+  "multi": false,
+  "stem": "Note: This question is part of a series of questions that present the same scenario. Each question in the \nseries contains a unique solution that might meet the stated goals. Some question sets might have more than \none correct solution, while others might not have a correct solution.\nAfter you answer a question in this section, you will NOT be able to return to it. As a result, these questions will \nnot appear on the review screen.\nAn organization provisions Azure Machine Learning workspaces for development, test, and production \nenvironments.\nEach environment must be deployed consistently and updated through source control. The deployment \nprocess must be automated, repeatable, and auditable.\nYou need to deploy Azure Machine Learning resources in a consistent and controlled manner.\nSolution: Create Azure Machine Learning workspaces manually in the Azure portal for each environment.\nDoes the solution meet the goal?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Yes"
+   },
+   {
+    "letter": "B",
+    "text": "No 132) Note: This question is part of a series of questions that present the same scenario. Each question in the series contains a unique solution that might meet the stated goals. Some question sets might have more than one correct solution, while others might not have a correct solution. After you answer a question in this section, you will NOT be able to return to it. As a result, these questions will not appear on the review screen. An organization provisions Azure Machine Learning workspaces for development, test, and production environments. Each environment must be deployed consistently and updated through source control. The deployment process must be automated, repeatable, and auditable. You need to deploy Azure Machine Learning resources in a consistent and controlled manner. Solution: Create Azure Machine Learning workspaces manually in the Azure portal for each environment. Does the solution meet the goal?"
+   },
+   {
+    "letter": "A",
+    "text": "Yes"
+   },
+   {
+    "letter": "B",
+    "text": "No Answer: B"
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 133,
+  "type": "reveal",
+  "question_images": [
+   "assets/q133_q0.png"
+  ],
+  "answer_images": [
+   "assets/q133_a0.png",
+   "assets/q133_a1.png",
+   "assets/q133_a2.png"
+  ],
+  "label": "Hotspot Question"
+ },
+ {
+  "number": 134,
+  "type": "mc",
+  "multi": true,
+  "stem": "You are designing a new machine learning solution to predict customer churn by using Azure \nMachine Learning. You have raw data in CSV format stored in Azure Data Lake.\nYou need to design the solution so that it can efficiently handle large-scale model training and \niterative development.\nWhich two actions should you perform? Each correct answer presents part of the solution.\nChoose two.\nNOTE: Each correct selection is worth one point.",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Convert the data into the JSONL format and upload into Blob Storage."
+   },
+   {
+    "letter": "B",
+    "text": "Schedule training using an Azure Data Factory pipeline."
+   },
+   {
+    "letter": "C",
+    "text": "Configure an Azure Machine Learning compute cluster for model training."
+   },
+   {
+    "letter": "D",
+    "text": "Register the data as a tabular dataset in the Azure Machine Learning workspace."
+   },
+   {
+    "letter": "E",
+    "text": "Configure an Azure Machine Learning compute instance for model training. 134) You are designing a new machine learning solution to predict customer churn by using Azure Machine Learning. You have raw data in CSV format stored in Azure Data Lake. You need to design the solution so that it can efficiently handle large-scale model training and iterative development. Which two actions should you perform? Each correct answer presents part of the solution. Choose two. NOTE: Each correct selection is worth one point."
+   },
+   {
+    "letter": "A",
+    "text": "Convert the data into the JSONL format and upload into Blob Storage."
+   },
+   {
+    "letter": "B",
+    "text": "Schedule training using an Azure Data Factory pipeline."
+   },
+   {
+    "letter": "C",
+    "text": "Configure an Azure Machine Learning compute cluster for model training."
+   },
+   {
+    "letter": "D",
+    "text": "Register the data as a tabular dataset in the Azure Machine Learning workspace."
+   },
+   {
+    "letter": "E",
+    "text": "Configure an Azure Machine Learning compute instance for model training. Answer: C,D"
+   }
+  ],
+  "correct": [
+   "C",
+   "D"
+  ]
+ },
+ {
+  "number": 135,
+  "type": "reveal",
+  "question_images": [
+   "assets/q135_q0.png"
+  ],
+  "answer_images": [
+   "assets/q135_a0.png",
+   "assets/q135_a1.png",
+   "assets/q135_a2.png"
+  ],
+  "label": "Drag and Drop"
+ },
+ {
+  "number": 136,
+  "type": "reveal",
+  "question_images": [
+   "assets/q136_q0.png"
+  ],
+  "answer_images": [
+   "assets/q136_a0.png",
+   "assets/q136_a1.png",
+   "assets/q136_a2.png"
+  ],
+  "label": "Hotspot Question"
+ },
+ {
+  "number": 137,
+  "type": "mc",
+  "multi": false,
+  "stem": "Note: This question is part of a series of questions that present the same scenario. Each question in the series \ncontains a unique solution that might meet the stated goals. Some question sets might have more than one correct \nsolution, while others might not have a correct solution.\nAfter you answer a question in this section, you will NOT be able to return to it. As a result, these questions will not \nappear on the review screen.\nYou manage a Retrieval-Augmented Generation (RAG) application built on Microsoft Foundry.\nThe application retrieves documents from an indexed knowledge base and generates answers for internal users.\nRecent feedback indicates that answers are fluent but sometimes include information that is not supported by the \ndocuments that were retrieved.\nYou need to evaluate whether a proposed change improves RAG answer quality by using supported and measurable \ntechniques.\nSolution: Measure token throughput and average response latency before and after applying the proposed change.\nDoes the solution meet the goal?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Yes"
+   },
+   {
+    "letter": "B",
+    "text": "No 137) Note: This question is part of a series of questions that present the same scenario. Each question in the series contains a unique solution that might meet the stated goals. Some question sets might have more than one correct solution, while others might not have a correct solution. After you answer a question in this section, you will NOT be able to return to it. As a result, these questions will not appear on the review screen. You manage a Retrieval-Augmented Generation (RAG) application built on Microsoft Foundry. The application retrieves documents from an indexed knowledge base and generates answers for internal users. Recent feedback indicates that answers are fluent but sometimes include information that is not supported by the documents that were retrieved. You need to evaluate whether a proposed change improves RAG answer quality by using supported and measurable techniques. Solution: Measure token throughput and average response latency before and after applying the proposed change. Does the solution meet the goal?"
+   },
+   {
+    "letter": "A",
+    "text": "Yes"
+   },
+   {
+    "letter": "B",
+    "text": "No Answer: B"
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 138,
+  "type": "reveal",
+  "question_images": [
+   "assets/q138_q0.png",
+   "assets/q138_q1.png"
+  ],
+  "answer_images": [
+   "assets/q138_a0.png"
+  ],
+  "label": "Hotspot Question"
+ },
+ {
+  "number": 139,
+  "type": "reveal",
+  "question_images": [
+   "assets/q139_q0.png",
+   "assets/q139_q1.png"
+  ],
+  "answer_images": [
+   "assets/q139_a0.png"
+  ],
+  "label": "Hotspot Question"
+ },
+ {
+  "number": 140,
+  "type": "mc",
+  "multi": false,
+  "stem": "You create an Azure Machine Learning workspace.\nYou must use the Python SDK v2 to implement an experiment from a Jupyter notebook in the \nworkspace. The experiment must log a list of numerical metrics.\nYou need to implement a method to log a list of numerical metrics.\nWhich method should you use?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "mlflow.log_batch()"
+   },
+   {
+    "letter": "B",
+    "text": "mlflow.log_metric()"
+   },
+   {
+    "letter": "C",
+    "text": "mlflow.log_artifact()"
+   },
+   {
+    "letter": "D",
+    "text": "mlflow.log_image()"
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 141,
+  "type": "mc",
+  "multi": false,
+  "stem": "You deploy a new model version to a managed online endpoint. You must test it with 10% traffic and \nautomatically roll back if latency or error rate increases beyond threshold. What should you configure?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Separate endpoint for testing"
+   },
+   {
+    "letter": "B",
+    "text": "Traffic splitting with monitoring alerts"
+   },
+   {
+    "letter": "C",
+    "text": "Batch endpoint validation"
+   },
+   {
+    "letter": "D",
+    "text": "Manual testing workflow"
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 142,
+  "type": "mc",
+  "multi": false,
+  "stem": "A team uses a hosted Git repository to store training code and pipeline definitions of a machine \nlearning experiment.\nThe team must ensure that access to the repository is granted without requiring each developer to store \npersonal access tokens on their machines.\nRepository access must be secure and centrally managed to reduce credential spread.\nYou need to enable secure access between an Azure Machine Learning workspace and the repository.\nWhat should you do?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Share a repository deploy key across all developers on the team."
+   },
+   {
+    "letter": "B",
+    "text": "Generate a personal access token and store it in a pipeline variable."
+   },
+   {
+    "letter": "C",
+    "text": "Require each developer to authenticate locally before every pipeline run."
+   },
+   {
+    "letter": "D",
+    "text": "Configure the workspace to use a managed identity for repository access."
+   }
+  ],
+  "correct": [
+   "D"
+  ]
+ },
+ {
+  "number": 143,
+  "type": "mc",
+  "multi": false,
+  "stem": "An organization runs a customer-facing generative AI application built by using Microsoft Foundry. The \napplication uses multiple prompts linked to multiple workflows to generate responses in production.\nThe application occasionally returns incomplete responses. The model call succeeds, but the final message \nsometimes stops early.\nThe issue cannot be reproduced reliably in development.\nYou need to identify where and why response generation is terminating early in production.\nWhich approach should you use?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Run a pre-release evaluation workflow to score groundedness and relevance on a test dataset."
+   },
+   {
+    "letter": "B",
+    "text": "Enable tracing and logging so that each workflow can be inspected."
+   },
+   {
+    "letter": "C",
+    "text": "Increase max_tokens and temperature to reduce the chance of early termination."
+   },
+   {
+    "letter": "D",
+    "text": "Replace the deployed model with a smaller model to reduce variability across responses. 143) An organization runs a customer-facing generative AI application built by using Microsoft Foundry. The application uses multiple prompts linked to multiple workflows to generate responses in production. The application occasionally returns incomplete responses. The model call succeeds, but the final message sometimes stops early. The issue cannot be reproduced reliably in development. You need to identify where and why response generation is terminating early in production. Which approach should you use?"
+   },
+   {
+    "letter": "A",
+    "text": "Run a pre-release evaluation workflow to score groundedness and relevance on a test dataset."
+   },
+   {
+    "letter": "B",
+    "text": "Enable tracing and logging so that each workflow can be inspected."
+   },
+   {
+    "letter": "C",
+    "text": "Increase max_tokens and temperature to reduce the chance of early termination."
+   },
+   {
+    "letter": "D",
+    "text": "Replace the deployed model with a smaller model to reduce variability across responses. Answer: B"
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 144,
+  "type": "reveal",
+  "question_images": [
+   "assets/q144_q0.png"
+  ],
+  "answer_images": [
+   "assets/q144_a0.png",
+   "assets/q144_a1.png",
+   "assets/q144_a2.png"
+  ],
+  "label": "Hotspot Question"
+ },
+ {
+  "number": 145,
+  "type": "mc",
+  "multi": true,
+  "stem": "You use Azure Machine Learning to train a model.\nYou must use Bayesian sampling to tune hyperparameters.\nYou need to select a learning_rate parameter distribution.\nWhich two distributions can you use? Each correct answer presents a complete solution.\nNOTE: Each correct selection is worth one point.",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Choice"
+   },
+   {
+    "letter": "B",
+    "text": "Uniform"
+   },
+   {
+    "letter": "C",
+    "text": "QNormal"
+   },
+   {
+    "letter": "D",
+    "text": "LogUniform"
+   },
+   {
+    "letter": "E",
+    "text": "Normal"
+   }
+  ],
+  "correct": [
+   "A",
+   "B"
+  ]
+ },
+ {
+  "number": 147,
+  "type": "reveal",
+  "question_images": [
+   "assets/q147_q0.png",
+   "assets/q147_q1.png"
+  ],
+  "answer_images": [
+   "assets/q147_a0.png"
+  ],
+  "label": "Hotspot Question"
+ },
+ {
+  "number": 148,
+  "type": "reveal",
+  "question_images": [
+   "assets/q148_q0.png",
+   "assets/q148_q1.png"
+  ],
+  "answer_images": [
+   "assets/q148_a0.png",
+   "assets/q148_a1.png"
+  ],
+  "label": "Hotspot Question"
+ },
+ {
+  "number": 149,
+  "type": "reveal",
+  "question_images": [
+   "assets/q149_q0.png"
+  ],
+  "answer_images": [
+   "assets/q149_a0.png",
+   "assets/q149_a1.png"
+  ],
+  "label": "Drag Drop"
+ },
+ {
+  "number": 150,
+  "type": "reveal",
+  "question_images": [
+   "assets/q150_q0.png"
+  ],
+  "answer_images": [
+   "assets/q150_a0.png",
+   "assets/q150_a1.png"
+  ],
+  "label": "Drag Drop"
+ },
+ {
+  "number": 151,
+  "type": "reveal",
+  "question_images": [
+   "assets/q151_q0.png"
+  ],
+  "answer_images": [
+   "assets/q151_a0.png"
+  ],
+  "label": "Question"
+ },
+ {
+  "number": 152,
+  "type": "reveal",
+  "question_images": [
+   "assets/q152_q0.png"
+  ],
+  "answer_images": [
+   "assets/q152_a0.png",
+   "assets/q152_a1.png"
+  ],
+  "label": "Drag and Drop"
+ },
+ {
+  "number": 153,
+  "type": "reveal",
+  "question_images": [
+   "assets/q153_q0.png"
+  ],
+  "answer_images": [
+   "assets/q153_a0.png",
+   "assets/q153_a1.png",
+   "assets/q153_a2.png",
+   "assets/q153_a3.png"
+  ],
+  "label": "Drag and Drop"
+ },
+ {
+  "number": 154,
+  "type": "reveal",
+  "question_images": [
+   "assets/q154_q0.png",
+   "assets/q154_q1.png"
+  ],
+  "answer_images": [
+   "assets/q154_a0.png"
+  ],
+  "label": "Hotspot Question"
+ },
+ {
+  "number": 155,
+  "type": "mc",
+  "multi": false,
+  "stem": "You are implementing hyperparameter tuning by using Bayesian sampling for an Azure ML \nPython SDK v2-based model training from a notebook. The notebook is in an Azure Machine Learning \nworkspace. The notebook uses a training script that runs on a compute cluster with 20 nodes.\nThe code implements Bandit termination policy with slackjactor set to 0.2 and a sweep job with \nmax_concurrent_trials set to 10.\nYou must increase effectiveness of the tuning process by improving sampling convergence.\nYou need to select which sampling convergence to use.\nWhat should you select?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Set the value of max_concurrent_trials to 20."
+   },
+   {
+    "letter": "B",
+    "text": "Set the value of max_concurrent_trials to 4."
+   },
+   {
+    "letter": "C",
+    "text": "Set the value of slack_factor of early_termination policy to 0.1."
+   },
+   {
+    "letter": "D",
+    "text": "Set the value of slack_factor of early_termination policy to 0.9."
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 156,
+  "type": "mc",
+  "multi": false,
+  "stem": "A team manages prompts used by a generative AI application built on Microsoft Foundry. \nPrompt updates are frequent, and prior changes have caused unexpected behavior in \nproduction.\nThe team requires that new prompt versions can be tested and reviewed without affecting \nproduction behavior.\nYou need to implement a source control practice that allows safe prompt experimentation.\nWhat should you do?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Create a GitHub Action workflow."
+   },
+   {
+    "letter": "B",
+    "text": "Create a feature git branch for each prompt change."
+   },
+   {
+    "letter": "C",
+    "text": "Revert the prompt in the production environment to a previous commit."
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 157,
+  "type": "reveal",
+  "question_images": [
+   "assets/q157_q0.png"
+  ],
+  "answer_images": [
+   "assets/q157_a0.png"
+  ],
+  "label": "Hotspot Question"
+ },
+ {
+  "number": 158,
+  "type": "reveal",
+  "question_images": [
+   "assets/q158_q0.png"
+  ],
+  "answer_images": [
+   "assets/q158_a0.png"
+  ],
+  "label": "Drag and Drop"
+ },
+ {
+  "number": 159,
+  "type": "mc",
+  "multi": false,
+  "stem": "You need to improve a GPT-5 model performance based on Fabrikam Inc.'s technical \nrequirements. Which action should you perform first?",
+  "options": [
+   {
+    "letter": "A",
+    "text": "Generate synthetic interaction data."
+   },
+   {
+    "letter": "B",
+    "text": "Evaluate the model output."
+   },
+   {
+    "letter": "C",
+    "text": "Fine-tune the model to improve accuracy."
+   },
+   {
+    "letter": "D",
+    "text": "Deploy the model to production to gather real-world feedback."
+   }
+  ],
+  "correct": [
+   "B"
+  ]
+ },
+ {
+  "number": 160,
+  "type": "reveal",
+  "question_images": [
+   "assets/q160_q0.png"
+  ],
+  "answer_images": [
+   "assets/q160_a0.png"
+  ],
+  "label": "Drag and Drop"
+ }
+]

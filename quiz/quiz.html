@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-300 Practice Quiz</title>
+<style>
+  :root{
+    --bg:#0f172a; --panel:#1e293b; --panel2:#273449; --text:#e2e8f0;
+    --muted:#94a3b8; --accent:#3b82f6; --accent2:#2563eb;
+    --ok:#22c55e; --okbg:#14351f; --bad:#ef4444; --badbg:#3a1618;
+    --border:#334155;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);}
+  header{position:sticky;top:0;z-index:10;background:var(--panel);border-bottom:1px solid var(--border);
+    padding:12px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+  header h1{font-size:18px;margin:0;font-weight:600;}
+  .stats{display:flex;gap:16px;font-size:13px;color:var(--muted);margin-left:auto;flex-wrap:wrap}
+  .stats b{color:var(--text)}
+  .progress{height:5px;background:var(--panel2);width:100%;}
+  .progress > div{height:100%;background:var(--accent);width:0;transition:width .3s}
+  main{max-width:900px;margin:24px auto;padding:0 16px 80px;}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:24px;}
+  .qhead{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+  .qnum{font-size:13px;font-weight:700;color:#fff;background:var(--accent2);padding:3px 10px;border-radius:20px}
+  .tag{font-size:11px;color:var(--muted);border:1px solid var(--border);padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px}
+  .stem{font-size:16px;line-height:1.55;white-space:pre-wrap;margin-bottom:18px}
+  .options{display:flex;flex-direction:column;gap:10px}
+  .opt{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border:1px solid var(--border);
+    border-radius:9px;cursor:pointer;background:var(--panel2);transition:.15s}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--accent);background:#213050}
+  .opt.correct{border-color:var(--ok);background:var(--okbg)}
+  .opt.wrong{border-color:var(--bad);background:var(--badbg)}
+  .opt .letter{font-weight:700;min-width:20px}
+  .opt input{margin-top:3px;pointer-events:none}
+  .imgs img{max-width:100%;border:1px solid var(--border);border-radius:8px;margin:8px 0;background:#fff}
+  .answer-block{margin-top:16px;padding-top:16px;border-top:1px dashed var(--border);display:none}
+  .answer-block.show{display:block}
+  .verdict{font-weight:700;margin:14px 0 4px;font-size:15px}
+  .verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+  .btnrow{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;align-items:center}
+  button{font-family:inherit;font-size:14px;border:none;border-radius:8px;padding:10px 18px;cursor:pointer;font-weight:600}
+  .btn-primary{background:var(--accent2);color:#fff}
+  .btn-primary:hover{background:var(--accent)}
+  .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+  .btn-ghost:hover{border-color:var(--accent)}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  .spacer{flex:1}
+  .jump{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+  .jump input{width:64px;background:var(--panel2);border:1px solid var(--border);color:var(--text);
+    border-radius:6px;padding:6px;font-size:14px}
+  .answer-note{font-size:14px;color:var(--muted);margin-top:8px}
+  .pill{display:inline-block;font-weight:700;color:var(--ok)}
+  .corr-badge{font-size:11px;font-weight:700;color:#78350f;background:#fbbf24;padding:2px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px}
+  .corr-box{margin-top:14px;border:1px solid #b45309;background:#3a2a10;border-radius:9px;padding:12px 14px}
+  .corr-box .h{font-weight:700;color:#fbbf24;margin-bottom:4px}
+  .corr-box .ans{font-size:15px;color:#fde68a;font-weight:700}
+  .corr-box .was{font-size:12px;color:var(--muted);margin-top:4px}
+  .corr-box .conf{font-size:11px;color:var(--muted);margin-top:2px}
+  .expl-box{margin-top:14px;border:1px solid #1d4ed8;background:#0e1c33;border-radius:9px;padding:12px 14px}
+  .expl-box .h{font-weight:700;color:#60a5fa;margin-bottom:6px;font-size:13px;text-transform:uppercase;letter-spacing:.5px}
+  .expl-box .body{font-size:14px;line-height:1.6;color:#dbeafe;white-space:pre-wrap}
+  .orig-details{margin-top:12px}
+  .orig-details summary{cursor:pointer;color:var(--muted);font-size:13px;padding:6px 0}
+  .orig-details summary:hover{color:var(--text)}
+  footer{position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:1px solid var(--border);
+    padding:10px 20px;display:flex;gap:10px;align-items:center;justify-content:center}
+  @media(max-width:600px){.stem{font-size:15px}main{margin-top:14px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>AI-300 Practice Quiz</h1>
+  <div class="stats">
+    <span>Question <b id="s-pos">1</b>/<b id="s-total">0</b></span>
+    <span>MC answered <b id="s-answered">0</b></span>
+    <span>Correct <b id="s-correct" style="color:var(--ok)">0</b></span>
+    <span>Wrong <b id="s-wrong" style="color:var(--bad)">0</b></span>
+  </div>
+</header>
+<div class="progress"><div id="bar"></div></div>
+
+<main>
+  <div class="card" id="card"><!-- rendered --></div>
+</main>
+
+<footer>
+  <button class="btn-ghost" id="prev">&larr; Previous</button>
+  <div class="jump">Go to
+    <input type="number" id="jump" min="1" value="1"> / <span id="f-total">0</span>
+  </div>
+  <button class="btn-primary" id="next">Next &rarr;</button>
+</footer>
+
+<script src="quiz_data.js"></script>
+<script>
+(function(){
+  const data = QUIZ_DATA;
+  const total = data.length;
+  let idx = 0;
+  // per-question state: {answered:bool, selected:[], correctBool, revealed}
+  const state = data.map(q => ({answered:false, selected:[], correctBool:null, revealed:false}));
+
+  const $ = id => document.getElementById(id);
+  $('s-total').textContent = total;
+  $('f-total').textContent = total;
+  $('jump').max = total;
+
+  function arraysEqual(a,b){
+    if(a.length!==b.length) return false;
+    const x=[...a].sort(), y=[...b].sort();
+    return x.every((v,i)=>v===y[i]);
+  }
+
+  function updateStats(){
+    const answered = state.filter(s=>s.answered).length;
+    const correct = state.filter(s=>s.correctBool===true).length;
+    const wrong = state.filter(s=>s.correctBool===false).length;
+    $('s-pos').textContent = idx+1;
+    $('s-answered').textContent = answered;
+    $('s-correct').textContent = correct;
+    $('s-wrong').textContent = wrong;
+    $('bar').style.width = ((idx+1)/total*100)+'%';
+    $('jump').value = idx+1;
+    $('prev').disabled = idx===0;
+    $('next').disabled = idx===total-1;
+  }
+
+  function render(){
+    const q = data[idx];
+    const st = state[idx];
+    const c = $('card');
+    let html = `<div class="qhead">
+        <span class="qnum">Q${q.number}</span>
+        <span class="tag">${q.type==='mc' ? (q.multi?'Multiple answer':'Single answer') : (q.label||'Exhibit')}</span>
+        ${q.correction ? '<span class="corr-badge">Corrected</span>' : ''}
+      </div>`;
+
+    const corrBox = q.correction ? `<div class="corr-box">
+        <div class="h">✎ Corrected answer</div>
+        <div class="ans">${escapeHtml(q.correction.answer)}</div>
+        <div class="was">PDF marked: ${escapeHtml(q.correction.was)}</div>
+        <div class="conf">Confidence: ${escapeHtml(q.correction.confidence)}</div>
+      </div>` : '';
+
+    const explBox = q.explanation ? `<div class="expl-box">
+        <div class="h">Why this answer</div>
+        <div class="body">${escapeHtml(q.explanation)}</div>
+      </div>` : '';
+
+    if(q.type==='mc'){
+      html += `<div class="stem">${escapeHtml(q.stem)}</div>`;
+      html += `<div class="options">`;
+      q.options.forEach(o=>{
+        const chk = q.multi ? 'checkbox' : 'radio';
+        const sel = st.selected.includes(o.letter);
+        let cls = 'opt';
+        if(st.answered){
+          const isCorrect = q.correct.includes(o.letter);
+          if(isCorrect) cls+=' correct';
+          else if(sel) cls+=' wrong';
+        } else if(sel){ cls+=' sel'; }
+        html += `<div class="${cls}" data-letter="${o.letter}">
+            <input type="${chk}" ${sel?'checked':''} disabled>
+            <span class="letter">${o.letter}.</span>
+            <span>${escapeHtml(o.text)}</span>
+          </div>`;
+      });
+      html += `</div>`;
+      if(st.answered){
+        const ok = st.correctBool;
+        html += `<div class="verdict ${ok?'ok':'bad'}">${ok?'✓ Correct':'✗ Incorrect'} &nbsp;—&nbsp; Answer: ${q.correct.join(', ')}</div>`;
+        html += corrBox;
+        html += explBox;
+      }
+      html += `<div class="btnrow">
+          <button class="btn-primary" id="check" ${st.answered?'disabled':''}>Check answer</button>
+          <span class="spacer"></span>
+        </div>`;
+    } else {
+      // reveal type
+      html += `<div class="imgs">` + q.question_images.map(s=>`<img src="${s}" alt="question exhibit">`).join('') + `</div>`;
+      html += `<div class="btnrow">
+          <button class="btn-primary" id="reveal">${st.revealed?'Hide answer':'Reveal answer'}</button>
+        </div>`;
+      let ansInner;
+      if(q.correction){
+        ansInner = corrBox +
+          `<details class="orig-details"><summary>View original PDF answer image (marked incorrectly)</summary>
+             <div class="imgs">` + q.answer_images.map(s=>`<img src="${s}" alt="original answer">`).join('') + `</div>
+           </details>` + explBox;
+      } else {
+        ansInner = `<div class="verdict ok">✓ Correct answer</div>
+           <div class="imgs">` + q.answer_images.map(s=>`<img src="${s}" alt="answer">`).join('') + `</div>` + explBox;
+      }
+      html += `<div class="answer-block ${st.revealed?'show':''}" id="ans">${ansInner}</div>`;
+    }
+    c.innerHTML = html;
+
+    if(q.type==='mc'){
+      const refreshSel = ()=>{
+        c.querySelectorAll('.opt').forEach(el=>{
+          const sel = st.selected.includes(el.dataset.letter);
+          el.classList.toggle('sel', sel);
+          const inp = el.querySelector('input');
+          if(inp) inp.checked = sel;
+        });
+      };
+      c.querySelectorAll('.opt').forEach(el=>{
+        el.addEventListener('click', ()=>{
+          if(st.answered) return;
+          const letter = el.dataset.letter;
+          if(q.multi){
+            const i = st.selected.indexOf(letter);
+            if(i>=0) st.selected.splice(i,1); else st.selected.push(letter);
+          } else {
+            st.selected = [letter];
+          }
+          refreshSel();
+        });
+      });
+      const cb = $('check');
+      if(cb) cb.addEventListener('click', ()=>{
+        if(st.selected.length===0){ return; }
+        st.answered = true;
+        st.correctBool = arraysEqual(st.selected, q.correct);
+        render(); updateStats();
+      });
+    } else {
+      $('reveal').addEventListener('click', ()=>{
+        st.revealed = !st.revealed;
+        if(st.revealed && !st.answered){ st.answered=true; }
+        render(); updateStats();
+      });
+    }
+    updateStats();
+  }
+
+  function escapeHtml(s){
+    return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  $('prev').addEventListener('click', ()=>{ if(idx>0){idx--; render();} });
+  $('next').addEventListener('click', ()=>{ if(idx<total-1){idx++; render();} });
+  $('jump').addEventListener('change', ()=>{
+    let v = parseInt($('jump').value,10);
+    if(isNaN(v)) return;
+    v = Math.max(1, Math.min(total, v));
+    if(v-1 === idx){ $('jump').value = idx+1; return; }
+    idx = v-1; render();
+  });
+  document.addEventListener('keydown', e=>{
+    if(e.target.tagName==='INPUT') return;
+    if(e.key==='ArrowRight' && idx<total-1){idx++; render();}
+    if(e.key==='ArrowLeft' && idx>0){idx--; render();}
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

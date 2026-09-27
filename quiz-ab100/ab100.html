@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AB-100 Practice Quiz</title>
+<style>
+  :root{
+    --bg:#0f172a; --panel:#1e293b; --panel2:#273449; --text:#e2e8f0;
+    --muted:#94a3b8; --accent:#3b82f6; --accent2:#2563eb;
+    --ok:#22c55e; --okbg:#14351f; --bad:#ef4444; --badbg:#3a1618;
+    --border:#334155;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);}
+  header{position:sticky;top:0;z-index:10;background:var(--panel);border-bottom:1px solid var(--border);
+    padding:12px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+  header h1{font-size:18px;margin:0;font-weight:600;}
+  .stats{display:flex;gap:16px;font-size:13px;color:var(--muted);margin-left:auto;flex-wrap:wrap}
+  .stats b{color:var(--text)}
+  .progress{height:5px;background:var(--panel2);width:100%;}
+  .progress > div{height:100%;background:var(--accent);width:0;transition:width .3s}
+  main{max-width:900px;margin:24px auto;padding:0 16px 90px;}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:24px;}
+  .qhead{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+  .qnum{font-size:13px;font-weight:700;color:#fff;background:var(--accent2);padding:3px 10px;border-radius:20px}
+  .tag{font-size:11px;color:var(--muted);border:1px solid var(--border);padding:2px 8px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px}
+  .stem{font-size:16px;line-height:1.6;white-space:pre-wrap;margin-bottom:18px}
+  .part-prompt{font-size:14px;font-weight:600;color:#cbd5e1;margin:16px 0 8px}
+  .hint{font-size:12px;color:var(--muted);margin-bottom:8px}
+  .options{display:flex;flex-direction:column;gap:10px}
+  .opt{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border:1px solid var(--border);
+    border-radius:9px;cursor:pointer;background:var(--panel2);transition:.15s}
+  .opt:hover{border-color:var(--accent)}
+  .opt.sel{border-color:var(--accent);background:#213050}
+  .opt.correct{border-color:var(--ok);background:var(--okbg)}
+  .opt.wrong{border-color:var(--bad);background:var(--badbg)}
+  .opt .letter{font-weight:700;min-width:20px}
+  .opt input{margin-top:3px;pointer-events:none}
+  .verdict{font-weight:700;margin:16px 0 4px;font-size:15px}
+  .verdict.ok{color:var(--ok)} .verdict.bad{color:var(--bad)}
+  .btnrow{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;align-items:center}
+  button{font-family:inherit;font-size:14px;border:none;border-radius:8px;padding:10px 18px;cursor:pointer;font-weight:600}
+  .btn-primary{background:var(--accent2);color:#fff}
+  .btn-primary:hover{background:var(--accent)}
+  .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+  .btn-ghost:hover{border-color:var(--accent)}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  .spacer{flex:1}
+  .expl-box{margin-top:14px;border:1px solid #1d4ed8;background:#0e1c33;border-radius:9px;padding:12px 14px}
+  .expl-box .h{font-weight:700;color:#60a5fa;margin-bottom:6px;font-size:13px;text-transform:uppercase;letter-spacing:.5px}
+  .expl-box .body{font-size:14px;line-height:1.6;color:#dbeafe;white-space:pre-wrap}
+  footer{position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:1px solid var(--border);
+    padding:10px 20px;display:flex;gap:10px;align-items:center;justify-content:center}
+  .jump{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+  .jump input{width:64px;background:var(--panel2);border:1px solid var(--border);color:var(--text);
+    border-radius:6px;padding:6px;font-size:14px}
+  @media(max-width:600px){.stem{font-size:15px}main{margin-top:14px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>AB-100 Practice Quiz</h1>
+  <div class="stats">
+    <span>Question <b id="s-pos">1</b>/<b id="s-total">0</b></span>
+    <span>Answered <b id="s-answered">0</b></span>
+    <span>Correct <b id="s-correct" style="color:var(--ok)">0</b></span>
+    <span>Wrong <b id="s-wrong" style="color:var(--bad)">0</b></span>
+  </div>
+</header>
+<div class="progress"><div id="bar"></div></div>
+
+<main>
+  <div class="card" id="card"><!-- rendered --></div>
+</main>
+
+<footer>
+  <button class="btn-ghost" id="prev">&larr; Previous</button>
+  <div class="jump">Go to
+    <input type="number" id="jump" min="1" value="1"> / <span id="f-total">0</span>
+  </div>
+  <button class="btn-primary" id="next">Next &rarr;</button>
+</footer>
+
+<script src="ab100_data.js"></script>
+<script>
+(function(){
+  const data = AB100_DATA.map(normalize);
+  const total = data.length;
+  let idx = 0;
+  const state = data.map(q => ({answered:false, correctBool:null, selected:groupsOf(q).map(()=>[])}));
+
+  const $ = id => document.getElementById(id);
+  $('s-total').textContent = total;
+  $('f-total').textContent = total;
+  $('jump').max = total;
+
+  // Uniform shape: _groups[] = {prompt, multi, options:[{letter,text}], correct:[letters]}
+  function normalize(q){
+    if(q.type==='twopart'){
+      q._groups = q.parts.map(p => ({prompt:p.prompt, multi:false, options:p.options, correct:[p.correct]}));
+    } else if(q.type==='yesno'){
+      q._groups = [{prompt:'', multi:false,
+        options:[{letter:'A',text:'Yes'},{letter:'B',text:'No'}], correct:q.correct}];
+    } else {
+      q._groups = [{prompt:'', multi:(q.type==='multi'), options:q.options, correct:q.correct}];
+    }
+    return q;
+  }
+  function groupsOf(q){ return q._groups; }
+
+  function tagFor(q){
+    if(q.type==='twopart') return 'Two-part';
+    if(q.type==='yesno') return 'Yes / No';
+    if(q.type==='multi') return 'Multiple answer';
+    return 'Single answer';
+  }
+
+  function arraysEqual(a,b){
+    if(a.length!==b.length) return false;
+    const x=[...a].sort(), y=[...b].sort();
+    return x.every((v,i)=>v===y[i]);
+  }
+
+  function escapeHtml(s){
+    return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function updateStats(){
+    const answered = state.filter(s=>s.answered).length;
+    const correct = state.filter(s=>s.correctBool===true).length;
+    const wrong = state.filter(s=>s.correctBool===false).length;
+    $('s-pos').textContent = idx+1;
+    $('s-answered').textContent = answered;
+    $('s-correct').textContent = correct;
+    $('s-wrong').textContent = wrong;
+    $('bar').style.width = ((idx+1)/total*100)+'%';
+    $('jump').value = idx+1;
+    $('prev').disabled = idx===0;
+    $('next').disabled = idx===total-1;
+  }
+
+  function render(){
+    const q = data[idx];
+    const st = state[idx];
+    const groups = groupsOf(q);
+    const c = $('card');
+    let html = `<div class="qhead">
+        <span class="qnum">Q${q.number}</span>
+        <span class="tag">${escapeHtml(tagFor(q))}</span>
+      </div>`;
+    html += `<div class="stem">${escapeHtml(q.stem)}</div>`;
+
+    groups.forEach((g,gi)=>{
+      if(g.prompt) html += `<div class="part-prompt">${escapeHtml(g.prompt)}</div>`;
+      if(g.multi && !st.answered) html += `<div class="hint">Select ${g.correct.length} answers</div>`;
+      html += `<div class="options" data-group="${gi}">`;
+      g.options.forEach(o=>{
+        const chk = g.multi ? 'checkbox' : 'radio';
+        const sel = st.selected[gi].includes(o.letter);
+        let cls = 'opt';
+        if(st.answered){
+          const isCorrect = g.correct.includes(o.letter);
+          if(isCorrect) cls+=' correct';
+          else if(sel) cls+=' wrong';
+        } else if(sel){ cls+=' sel'; }
+        html += `<div class="${cls}" data-group="${gi}" data-letter="${o.letter}">
+            <input type="${chk}" ${sel?'checked':''} disabled>
+            <span class="letter">${o.letter}.</span>
+            <span>${escapeHtml(o.text)}</span>
+          </div>`;
+      });
+      html += `</div>`;
+    });
+
+    if(st.answered){
+      const ok = st.correctBool;
+      const ansTxt = groups.map(g=>g.correct.join(', ')).join('  |  ');
+      html += `<div class="verdict ${ok?'ok':'bad'}">${ok?'✓ Correct':'✗ Incorrect'} &nbsp;—&nbsp; Answer: ${escapeHtml(ansTxt)}</div>`;
+      if(q.explanation){
+        html += `<div class="expl-box"><div class="h">Why this answer</div>
+                 <div class="body">${escapeHtml(q.explanation)}</div></div>`;
+      }
+    }
+
+    html += `<div class="btnrow">
+        <button class="btn-primary" id="check" ${st.answered?'disabled':''}>Check answer</button>
+        <span class="spacer"></span>
+      </div>`;
+    c.innerHTML = html;
+
+    c.querySelectorAll('.opt').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        if(st.answered) return;
+        const gi = +el.dataset.group;
+        const letter = el.dataset.letter;
+        const g = groups[gi];
+        const arr = st.selected[gi];
+        if(g.multi){
+          const i = arr.indexOf(letter);
+          if(i>=0) arr.splice(i,1); else arr.push(letter);
+        } else {
+          st.selected[gi] = [letter];
+        }
+        refreshSel();
+      });
+    });
+    function refreshSel(){
+      c.querySelectorAll('.opt').forEach(el=>{
+        const gi = +el.dataset.group;
+        const sel = st.selected[gi].includes(el.dataset.letter);
+        el.classList.toggle('sel', sel);
+        const inp = el.querySelector('input'); if(inp) inp.checked = sel;
+      });
+    }
+
+    const cb = $('check');
+    if(cb) cb.addEventListener('click', ()=>{
+      if(st.selected.some(a=>a.length===0)) return; // every group needs a selection
+      st.answered = true;
+      st.correctBool = groups.every((g,gi)=>arraysEqual(st.selected[gi], g.correct));
+      render(); updateStats();
+    });
+
+    updateStats();
+  }
+
+  $('prev').addEventListener('click', ()=>{ if(idx>0){idx--; render();} });
+  $('next').addEventListener('click', ()=>{ if(idx<total-1){idx++; render();} });
+  $('jump').addEventListener('change', ()=>{
+    let v = parseInt($('jump').value,10);
+    if(isNaN(v)) return;
+    v = Math.max(1, Math.min(total, v));
+    idx = v-1; render();
+  });
+  document.addEventListener('keydown', e=>{
+    if(e.target.tagName==='INPUT') return;
+    if(e.key==='ArrowRight' && idx<total-1){idx++; render();}
+    if(e.key==='ArrowLeft' && idx>0){idx--; render();}
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
