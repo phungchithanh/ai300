@@ -225,7 +225,10 @@ export class HighlightDirective {
      "5️⃣ `ngAfterContentChecked` – after every check of projected content",
      "6️⃣ `ngAfterViewInit` – once, after view & child views initialized",
      "7️⃣ `ngAfterViewChecked` – after every check of the view",
-     "8️⃣ `ngOnDestroy` – cleanup before component is removed"],
+     "8️⃣ `ngOnDestroy` – cleanup before component is removed",
+     "The order above describes **initialization**, followed eventually by destruction; on later checks only the applicable change/check hooks repeat",
+     "`ngOnChanges` runs only when Angular sets a changed input; it is not guaranteed to run for a component with no bound inputs",
+     "Use `ngOnInit` for initial API calls and `ngOnDestroy` for subscriptions, timers and listener cleanup"],
   tip:"Memory trick: **C-I-D, Content (Init/Checked), View (Init/Checked), Destroy**" },
 
 { cat:"Lifecycle Hooks", q:"What is the difference between constructor and ngOnInit?",
@@ -367,7 +370,10 @@ private url = inject(API_URL);` },
      "**switchMap** – **cancels previous**, keeps latest → search/typeahead",
      "**mergeMap** – runs **all in parallel** → independent requests",
      "**concatMap** – **queues**, one after another in order → ordered saves",
-     "**exhaustMap** – **ignores new** values while busy → prevent double submit / login click"],
+     "**exhaustMap** – **ignores new** values while busy → prevent double submit / login click",
+     "These are **higher-order mapping operators**: the projection returns an Observable, and the operator manages its subscription",
+     "`switchMap` unsubscribes from the previous inner stream; cancelling a client HTTP request does **not** undo a write already processed by the server",
+     "`mergeMap` results can arrive out of order; use its concurrency parameter to bound parallel work"],
   tip:"Switch = cancel, Merge = parallel, Concat = queue, Exhaust = ignore." },
 
 { cat:"RxJS & Observables", q:"What are hot vs cold Observables?",
@@ -444,7 +450,7 @@ private url = inject(API_URL);` },
      "`signal(v)` – writable; read with `count()`, update with `.set()` / `.update()`",
      "`computed(() => …)` – derived, **memoized**, read-only",
      "`effect(() => …)` – side effect that re-runs when dependencies change",
-     "**Fine-grained reactivity** → Angular knows exactly what to update; enables zoneless",
+     "**Dependency tracking** identifies consumers that need refreshing; Angular still checks affected views and updates their bindings, not isolated DOM nodes directly",
      "Synchronous, always have a value, no subscribe/unsubscribe"],
   code:`count = signal(0);
 double = computed(() => this.count() * 2);
@@ -453,6 +459,9 @@ inc() { this.count.update(c => c + 1); }` },
 { cat:"Change Detection & Signals", q:"Signals vs RxJS Observables — when to use which?",
   a:["**Signals**: synchronous **state**, UI values, derived values → simple & glitch-free",
      "**Observables**: **async events/streams**, HTTP, websockets, time-based operators (debounce, retry)",
+     "Signals are read by calling a getter; reading them needs **no subscription or unsubscription**",
+     "Observables may emit **synchronously or asynchronously**, may complete/error, and support cancellation and stream composition",
+     "Long-lived manual Observable subscriptions need cleanup; `async` pipe and `takeUntilDestroyed()` manage it automatically",
      "Interop: `toSignal(obs$)` and `toObservable(sig)` from `@angular/core/rxjs-interop`",
      "Rule of thumb: **RxJS for events, Signals for state**"] },
 
@@ -525,11 +534,28 @@ inc() { this.count.update(c => c + 1); }` },
 
 // ───────────── Forms ─────────────
 { cat:"Forms", q:"What is the difference between template-driven and reactive forms?",
-  a:["**Template-driven** (`FormsModule`): logic in the **template**, `ngModel`, async, simple forms",
-     "**Reactive** (`ReactiveFormsModule`): model in the **class** (`FormGroup`, `FormControl`, `FormArray`)",
-     "Reactive = **synchronous**, explicit, **easier to test**, dynamic fields, `valueChanges` Observables",
-     "Reactive forms are **strongly typed** since v14",
-     "Choose reactive for complex/enterprise forms"] },
+  a:["**Setup**: template-driven (`FormsModule`) declares controls in HTML with `ngModel`; reactive (`ReactiveFormsModule`) builds an explicit TypeScript model with `FormControl`, `FormGroup` and `FormArray`",
+     "**Data flow**: template-driven model/view synchronization involves asynchronous updates; reactive control-model updates are synchronous and expose `valueChanges`/`statusChanges` Observables",
+     "**Validation**: template-driven uses directives such as `required`/`email` and custom validator directives; reactive uses functions such as `Validators.required`, `Validators.email` and custom validators",
+     "**Testing**: template-driven forms can be **component-unit-tested**, but require template setup, change detection and sometimes waiting for stabilization; they do not require E2E tests exclusively",
+     "Reactive form-model values and synchronous validators can be unit tested **without rendering a component**; async validators still need async tests",
+     "**Scale**: template-driven suits simple forms; reactive suits dynamic fields, cross-field validation and complex enterprise workflows",
+     "Reactive forms support **strict typing** since v14"],
+  code:`// Template-driven: import FormsModule; email is a component property.
+<input name="email" [(ngModel)]="email" required email>
+
+// Reactive: import ReactiveFormsModule, FormControl and Validators.
+emailControl = new FormControl('', {
+  nonNullable: true,
+  validators: [Validators.required, Validators.email]
+});
+<input [formControl]="emailControl">
+
+// Model-only test (no TestBed or DOM required)
+const control = new FormControl('', Validators.required);
+expect(control.valid).toBe(false);
+control.setValue('ana@example.com');
+expect(control.valid).toBe(true);` },
 
 { cat:"Forms", q:"What are FormControl, FormGroup, FormArray and FormBuilder?",
   a:["**FormControl** – a single field (value + validation state)",
@@ -663,9 +689,11 @@ inc() { this.count.update(c => c + 1); }` },
 
 { cat:"Performance", q:"What does @defer do?",
   a:["**Template-level lazy loading** (v17+)",
-     "Content and its dependencies are split into a **separate chunk**",
+     "Eligible components, directives, pipes and their styles are loaded through **dynamic imports**, reducing the initial bundle",
+     "Directly deferred dependencies must be **standalone** and not referenced outside defer blocks in the same file (including ViewChild queries); their transitive dependencies may use NgModules",
      "Triggers: `on viewport`, `on idle`, `on interaction`, `on hover`, `on timer`, `when condition`",
-     "Sub-blocks: `@placeholder`, `@loading`, `@error`"],
+     "Sub-blocks: `@placeholder`, `@loading`, `@error`; their dependencies are **eagerly loaded**, so keep them lightweight",
+     "Default trigger is **idle**; `prefetch on idle` can download code before a viewport/interaction render trigger"],
   code:`@defer (on viewport) {
   <app-heavy-chart />
 } @placeholder {
@@ -873,10 +901,13 @@ export class SettingsStore {
      "**v20+**: signals APIs stable, zoneless stable, continued modernization"] },
 
 { cat:"Modern Angular", q:"What is zoneless Angular?",
-  a:["Running Angular **without Zone.js**",
-     "Change detection triggered by **signals**, async pipe, events, `markForCheck`",
+  a:["Running Angular **without Zone.js** monkey-patching asynchronous browser APIs to schedule change detection",
+     "Angular schedules refreshes from explicit notifications: template-read signal updates, bound event listeners, `AsyncPipe` (via `markForCheck`), `ComponentRef.setInput()` and manual `markForCheck()`",
+     "Signals are useful but **not mandatory**; Observable-based components also work when they notify Angular",
      "Benefits: **smaller bundle**, better performance, cleaner stack traces",
-     "Enable: `provideZonelessChangeDetection()`"] },
+     "**Angular v21+**: zoneless is the default unless overridden with `provideZoneChangeDetection()`; **v20**: opt in with `provideZonelessChangeDetection()`",
+     "Remove `zone.js`/`zone.js/testing` from build and test polyfills; audit libraries and callbacks that relied on Zone.js",
+     "A timer changing a plain field does not itself notify zoneless Angular; use a template-read signal or call `markForCheck()`"] },
 
 // ───────────── Scenario-based ─────────────
 { cat:"Scenario-based", q:"A component with OnPush doesn't update when you push an item into an input array. Why and how to fix?",

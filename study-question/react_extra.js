@@ -126,6 +126,97 @@ function ProductDetail() {
   return <button onClick={() => navigate('/products')}>Back from {id}</button>;
 }` },
 
+{ cat:"Scenario-based", q:"Interview exercise: Why does a counter increment only once after two setCount(count + 1) calls?",
+  a:["Each handler sees the **state snapshot for its render**; both calls calculate the same next value",
+     "React batches the updates, so replacing 0 with 1 twice still produces 1",
+     "Use **functional updaters** when the next state depends on the pending state; the two updater functions compose to produce 2",
+     "Keep updaters pure; do not mutate state or perform network requests inside them"],
+  code:`function Counter() {
+  const [count, setCount] = useState(0);
+
+  function incrementTwice() {
+    setCount(current => current + 1);
+    setCount(current => current + 1);
+  }
+
+  return <button onClick={incrementTwice}>{count}</button>;
+}` },
+
+{ cat:"Hooks", q:"Interview exercise: How do you fetch a user with useEffect without stale responses or hidden HTTP errors?",
+  a:["Depend on `userId`; cleanup cancels the previous request and prevents its result from replacing a newer user's data",
+     "Check **`response.ok`**: fetch does not reject merely because the server returned HTTP 404 or 500",
+     "Expose loading and error state; ignore only a request deliberately aborted during cleanup",
+     "For larger apps prefer a router loader or a data library for caching, retries and deduplication"],
+  code:`function UserProfile({ userId }) {
+  const [result, setResult] = useState({ loading: true, user: null, error: null });
+
+  useEffect(() => {
+    const controller = new AbortController();
+    setResult({ loading: true, user: null, error: null });
+
+    async function load() {
+      try {
+        const response = await fetch('/api/users/' + encodeURIComponent(userId), {
+          signal: controller.signal
+        });
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        const user = await response.json();
+        if (!controller.signal.aborted) {
+          setResult({ loading: false, user, error: null });
+        }
+      } catch (error) {
+        if (!controller.signal.aborted) {
+          setResult({ loading: false, user: null, error: String(error) });
+        }
+      }
+    }
+
+    load();
+    return () => controller.abort();
+  }, [userId]);
+
+  if (result.loading) return <p role="status">Loading...</p>;
+  if (result.error) return <p role="alert">{result.error}</p>;
+  return <h2>{result.user.name}</h2>;
+}` },
+
+{ cat:"Rendering & Reconciliation", q:"Interview exercise: After sorting a list, why does an input show another row's text?",
+  a:["If rows use **array indexes as keys**, React may reuse a component instance at the same position for a different record",
+     "Local state or an uncontrolled input's DOM value stays with the reused instance, not the intended data record",
+     "Use a **stable record ID** as the key; test typing, sorting, inserting and deleting rows",
+     "Changing keys randomly is not a fix: it remounts rows, loses state/focus and adds work"],
+  code:`// Wrong for a sortable/editable list
+items.map((item, index) => <EditableRow key={index} item={item} />);
+
+// Stable identity follows each record when it moves
+items.map(item => <EditableRow key={item.id} item={item} />);` },
+
+{ cat:"Forms & Events", q:"Interview exercise: How do you submit an uncontrolled form without a ref for every input?",
+  a:["Give inputs **name attributes** and use `FormData` to read current DOM values in the submit handler",
+     "`defaultValue` sets the initial value; it does not continuously control the input",
+     "Use controlled state instead when the UI must react immediately to each keystroke or enforce custom formatting",
+     "Validate again on the server; neither controlled nor uncontrolled inputs make client data trustworthy"],
+  code:`function ContactForm({ onSave }) {
+  function handleSubmit(event) {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    onSave({ email: data.get('email') });
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>Email <input name="email" type="email" defaultValue="" required /></label>
+      <button type="submit">Save</button>
+    </form>
+  );
+}` },
+
+{ cat:"Advanced: Scenario-based", level:"Advanced", q:"A memoized React page is still slow. How do you distinguish rendering, network and DOM costs?",
+  a:["Use **React DevTools Profiler** to identify expensive commits and the browser Performance/Network panels to separate rendering, JavaScript, layout and request delays",
+     "For prop-driven renders, check whether object/function props change identity; use memoization only when measured savings justify it",
+     "For large DOM trees, virtualize lists; memoization does not remove layout cost from thousands of mounted nodes",
+     "For slow initial loads, use route-based lazy loading, optimize assets and resolve request waterfalls rather than adding useMemo everywhere",
+     "Compare production builds and repeat the same interaction; record duration and responsiveness before and after the change"] },
 { cat:"Routing", q:"How do you implement role-based route guards in React with Keycloak (the React equivalent of Angular guards)?",
   a:["React has no built-in guards → wrap routes in a **guard component** that checks auth and renders `<Outlet />` or `<Navigate />`",
      "Initialize **keycloak-js** once (`onLoad: 'login-required'` or `'check-sso'`, `pkceMethod: 'S256'`)",

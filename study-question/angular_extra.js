@@ -220,4 +220,65 @@ ngOnInit() { this.store.dispatch(ProductActions.load()); }` },
      "Guards only run on **navigation**, so they won't catch expiry on the current page — the **interceptor** handles it",
      "With Keycloak: `keycloak.updateToken(30)` before requests; on failure call `keycloak.login()`",
      "Optionally show a 'session expiring' dialog using the token `exp` claim"] },
+{ cat:"Advanced: Interview Quiz", level:"Advanced", q:"Quiz: What distinguishes a computed signal from a writable signal?",
+  a:["**A.** It accepts direct `.set()` and `.update()` calls to override derived values",
+     "**B.** It executes eagerly after every dependency change, even if nobody reads it",
+     "**C.** It is read-only and lazily recalculates its value when a dependency has changed and the value is next read",
+     "**Correct answer: C.** `computed()` derives state; its calculation is lazy and memoized. Dependency changes invalidate the cached result rather than eagerly running the calculation",
+     "A describes a writable `signal()`, not `computed()`; B confuses invalidation with evaluation"],
+  code:`const count = signal(2);
+const double = computed(() => count() * 2);
+
+console.log(double()); // 4: first calculation
+console.log(double()); // 4: cached
+count.set(3);          // invalidates double
+console.log(double()); // 6: recalculates on read`,
+  tip:"Derived state: computed(). Editable source state: signal()." },
+
+{ cat:"Forms", q:"Interview scenario: How would you build a dynamic order form with cross-field validation?",
+  a:["Choose **reactive forms**: define a typed `FormGroup` for order details and a `FormArray` of line-item groups",
+     "Use control validators for required fields and positive quantities; use a **group-level validator** for relationships such as startDate before endDate",
+     "Add/remove controls programmatically and display errors after fields are touched or submission is attempted",
+     "Test model operations and validators directly; component tests verify bindings, error messages and accessibility",
+     "For server validation, show a pending state and surface API errors; async validation is not made synchronous by choosing reactive forms"] },
+
+{ cat:"Lifecycle Hooks", q:"Interview scenario: Why is a ViewChild unavailable in ngOnInit, and when should you initialize a chart?",
+  a:["A typical **dynamic view query** (`static: false`) resolves before `ngAfterViewInit`, not before `ngOnInit`; a conditional child may not exist yet",
+     "Use `ngAfterViewInit` for access to initialized view children; an eligible `static: true` query resolves before `ngOnInit` but does not track structural changes",
+     "For browser DOM measurement or third-party chart setup, use **`afterNextRender()`** registered in an injection context; render callbacks do not run during SSR",
+     "Avoid changing already-checked bindings in `ngAfterViewInit`; keep derived state in signals/computed values",
+     "Destroy the chart, observers and event listeners using `DestroyRef.onDestroy()` or `ngOnDestroy`"] },
+
+{ cat:"Advanced: Scenario-based", level:"Advanced", q:"A zoneless component does not refresh after setTimeout. How do you diagnose and fix it?",
+  a:["Check whether the callback only assigns a **plain field**; unlike a template event, that timer assignment does not notify zoneless Angular",
+     "Prefer updating a **signal read in the template**, or call `ChangeDetectorRef.markForCheck()` after changing the field",
+     "An Observable consumed by `AsyncPipe` also notifies Angular; a bare manual subscription assigning a plain field does not",
+     "Test the actual async path and DOM update without relying on Zone.js or an extra forced detection pass to hide the bug"],
+  code:`@Component({
+  selector: 'app-status',
+  standalone: true,
+  template: '<p>{{ status() }}</p>'
+})
+export class StatusComponent {
+  readonly status = signal('Waiting');
+
+  constructor() {
+    const timer = setTimeout(() => this.status.set('Ready'), 1000);
+    inject(DestroyRef).onDestroy(() => clearTimeout(timer));
+  }
+}` },
+
+{ cat:"Advanced: Scenario-based", level:"Advanced", q:"Which RxJS mapping operator would you choose for search, uploads, ordered saves and submit buttons?",
+  a:["**Live search → `switchMap`**: discard old results when a new query arrives; usually combine with `debounceTime` and `distinctUntilChanged`",
+     "**Independent uploads → `mergeMap`**: process concurrently, with a bounded concurrency such as 3",
+     "**Ordered writes → `concatMap`**: wait for each operation to complete; monitor queue growth under heavy input",
+     "**Submit button → `exhaustMap`**: ignore repeated clicks until the active request completes; server-side idempotency is still required",
+     "Handle errors inside the inner stream when later user actions should continue working; test overlap, errors and completion, not just the happy path"] },
+
+{ cat:"Performance", q:"Interview scenario: Why is a chart inside @defer still included in the initial bundle?",
+  a:["Verify the directly deferred chart is **standalone**; non-standalone direct dependencies are eagerly loaded",
+     "Check for references outside defer blocks in the same file, including `ViewChild` queries, that make the chart eager",
+     "Keep heavy dependencies out of `@placeholder`, `@loading` and `@error`, since those dependencies are eager",
+     "Separate **download timing** from **render timing**: prefetching may load a chunk early without rendering the chart",
+     "Verify a production build's chunk graph and browser Network panel; merely wrapping HTML in `@defer` does not prove a bundle reduction"] },
 ]);
