@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azure &amp; AWS Services</title>
+<link rel="stylesheet" href="prep.css">
+</head>
+<body>
+<header>
+  <div class="hrow">
+    <h1>Azure &amp; AWS Services</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="angular.html">Angular</a>
+      <a href="react.html">React</a>
+      <a href="csharp.html">C#</a>
+      <a href="sql.html">SQL & NoSQL</a>
+      <a href="oop.html">OOP & Patterns</a>
+      <a href="system.html">System & DevOps</a>
+      <a href="ai.html">AI & GenAI</a>
+      <a href="cloud.html" class="active">Cloud Services</a>
+    </nav>
+  </div>
+  <div class="hrow tools">
+    <input id="search" type="search" placeholder="Search services (e.g. vector, OCR, Lambda)...">
+    <select id="cat"></select>
+    <button class="btn-ghost" id="aiOnly">AI services only</button>
+  </div>
+</header>
+<main>
+  <p style="color:var(--muted);margin-top:0">Most common Azure services and their closest AWS equivalents, with a one-line description. <b style="color:#fde68a">AI services are listed first.</b></p>
+  <div id="list"></div>
+</main>
+<script src="cloud_data.js"></script>
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const esc = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const cats = [...new Set(CLOUD_DATA.map(d=>d.cat))];
+  $('cat').innerHTML = '<option value="">All categories</option>' +
+    cats.map(c=>`<option value="${esc(c)}">${CLOUD_DATA.find(d=>d.cat===c).ai?'🤖 ':''}${esc(c)} (${CLOUD_DATA.filter(d=>d.cat===c).length})</option>`).join('');
+  let aiOnly = false;
+
+  const side = (cls, label, [name, desc]) => `<div class="svc ${cls}">
+      <div class="svc-cloud">${label}</div><div class="svc-name">${esc(name)}</div><div class="svc-desc">${esc(desc)}</div></div>`;
+
+  function render(){
+    const term = $('search').value.trim().toLowerCase();
+    const cat = $('cat').value;
+    const list = CLOUD_DATA.filter(d => (!cat || d.cat===cat) && (!aiOnly || d.ai) &&
+      (!term || [d.cat, ...d.azure, ...d.aws, d.note||''].join(' ').toLowerCase().includes(term)));
+    let html = '', last = null;
+    list.forEach(d => {
+      if(d.cat !== last){ html += `<div class="cat-title">${d.ai?'🤖 ':''}${esc(d.cat)}</div>`; last = d.cat; }
+      html += `<div class="card svc-row">${side('az','Azure',d.azure)}${side('aws','AWS',d.aws)}
+        ${d.note?`<div class="tip svc-note">💡 ${esc(d.note)}</div>`:''}</div>`;
+    });
+    $('list').innerHTML = html || '<div class="empty">No services match.</div>';
+  }
+  $('search').oninput = render;
+  $('cat').onchange = render;
+  $('aiOnly').onclick = e => { aiOnly = !aiOnly; e.target.classList.toggle('on', aiOnly); render(); };
+  render();
+})();
+</script>
+</body>
+</html>
