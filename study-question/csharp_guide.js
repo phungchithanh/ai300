@@ -54,14 +54,34 @@ await Parallel.ForEachAsync(ids, new ParallelOptions { MaxDegreeOfParallelism = 
      "**High throughput** – processing **many requests/messages per second**",
      "Achieved with async I/O, batching, caching, queues, horizontal scaling, avoiding locks/contention"] },
 
-{ cat:"Async & Threading", q:"What does the volatile keyword do?",
-  a:["Field may be changed by **multiple threads** → reads/writes are not cached/reordered",
-     "Guarantees **visibility** of the latest value, **not atomicity**",
-     "OK for a simple **stop flag**",
-     "For compound operations use `lock`, `Interlocked`, or concurrent collections",
-     "For cancellation prefer **CancellationToken**"],
-  code:`private volatile bool _isRunning = true;
-public void Stop() => _isRunning = false;` },
+{ cat:"Async & Threading", q:"What does the volatile keyword do in C#?",
+  a:["In C#, the **`volatile` keyword indicates that a field can be modified by multiple concurrently executing threads**. It tells both the compiler and the processor to bypass certain optimizations, ensuring that changes made to a variable by one thread are correctly visible to other threads",
+     "**What `volatile` actually does** – under normal circumstances, the .NET compiler, the Just-In-Time (JIT) compiler, and the CPU optimize code for performance. They might:",
+     "**Cache values in CPU registers** – read a field once and keep reusing that copy (e.g. hoist the read out of a loop), so updates made by other threads are never seen",
+     "**Reorder reads and writes** – execute memory operations in a different order than the code, as long as the result looks the same to a single thread",
+     "Marking a field as `volatile` alters this behavior via two main mechanics:",
+     "**1. Visibility (no caching)** – every read and write of the field is actually performed against memory; the compiler/JIT can't keep the value in a register, hoist the read out of a loop or optimize the access away",
+     "**2. Ordering (acquire/release semantics)** – a volatile **read** has acquire semantics: reads/writes after it can't be moved before it. A volatile **write** has release semantics: reads/writes before it can't be moved after it",
+     "**A common example: the worker flag** – without `volatile`, a background worker loop might run forever because the CPU caches the `_shouldStop` flag and never checks main memory for an update"],
+  code:`class Worker
+{
+    // Marked volatile so the worker thread always checks main memory
+    private volatile bool _shouldStop;
+
+    public void DoWork()
+    {
+        while (!_shouldStop)
+        {
+            // Do some background processing...
+        }
+    }
+
+    public void RequestStop()
+    {
+        _shouldStop = true; // Called from a different (e.g., UI) thread
+    }
+}`,
+  tip:"`volatile` gives visibility and ordering, **not atomicity** – `_count++` on a volatile field is still a race condition. Use `lock` or `Interlocked` for compound operations, and prefer `CancellationToken` to stop work." },
 
 { cat:"OOP in C#", q:"Can a C# interface have an implementation?",
   a:["**Yes, since C# 8** – **default interface methods**",
