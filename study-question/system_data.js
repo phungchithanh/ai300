@@ -35,34 +35,17 @@ DELETE /api/engagements/E100     // delete → 204` },
      "PUT can also create at a **client-known** URL (`PUT /users/123`)"] },
 
 { cat:"REST & HTTP", q:"What is the difference between PUT and POST in idempotency, resource URLs, payloads and status codes?",
-  a:["An HTTP operation is **idempotent** when: **Sending the same request multiple times has the same intended effect on the server as sending it once.**",
-     "**Primary intent**: POST asks the target resource to process the payload, commonly creating a subordinate resource or triggering an action; PUT creates or replaces the state of the resource at the specified target URI",
-     "**Idempotency**: PUT is idempotent by HTTP semantics; repeating an identical request has the same intended effect as one execution. POST is not guaranteed idempotent, so retries may create duplicates or repeat actions",
-     "**Resource control**: POST commonly targets a collection (`POST /users`) and lets the server choose the new resource URI/ID. PUT targets a specific URI already known to the client (`PUT /users/123`). These are common API patterns, not requirements that every POST use a collection or that the client originally generated the ID",
-     "**Payload**: POST accepts the representation required by that operation. PUT sends a complete replacement representation under the API's writable-field contract; omitted fields may be reset/removed or cause validation errors. It does not universally mean every stored or server-managed field must be supplied",
-     "**Partial changes**: prefer PATCH when the contract is to update selected fields rather than replace the representation",
-     "**POST success**: creation commonly returns **201 Created** with a `Location` header; other operations may return 200 OK, 204 No Content or 202 Accepted for asynchronous processing",
-     "**PUT success**: creating a resource returns **201 Created**; replacing an existing resource returns **200 OK** with a response representation or **204 No Content** without one",
-     "**Retry nuance**: idempotency does not guarantee identical responses or prohibit per-request logging. A first PUT may return 201 and a repeated PUT 200/204 while leaving the same resource state",
-     "**Safe POST retries**: use an API-supported idempotency key and reuse it for the same operation; the server must persist/deduplicate it. For concurrent edits, use version checks such as `If-Match`/ETag to avoid lost updates"],
-  code:`// POST: server selects the new resource URI
-POST /users
-Content-Type: application/json
-
-{"name":"Ana","email":"ana@example.com"}
-// Response: 201 Created
-// Location: /users/123
-// Repeating this POST may create another user unless deduplicated.
-
-// PUT: client targets a known resource URI
-PUT /users/123
-Content-Type: application/json
-
-{"name":"Ana","email":"ana@example.com"}
-// Existing resource: 200 OK or 204 No Content
-// Newly created resource (if supported): 201 Created
-// Repeating the same PUT has the same intended resource-state effect.`,
-  tip:"POST = process at this endpoint; PUT = create/replace at this URI. Idempotent means same intended effect, not necessarily same status or response body." },
+  a:["The primary difference between **PUT and POST** lies in **idempotency and resource control**.",
+     "An HTTP operation is **idempotent** when: **Sending the same request multiple times has the same intended effect on the server as sending it once.**",
+     "**PUT** is **idempotent**: repeating the exact same request leaves the resource in the same intended state as sending it once. You control the exact URL of the resource.",
+     "**Core Differences at a Glance**",
+     "**Primary Intent** — **POST:** Create a new subordinate resource, or trigger a generic server-side action. **PUT:** Replace an entire existing resource, or create it if it does not exist yet (**upsert**, if supported).",
+     "**Idempotent?** — **POST:** Not guaranteed; repeating the request may create duplicates. **PUT:** Yes; repeating the request has the same intended resource-state effect as the first execution.",
+     "**URL Path** — **POST:** Typically a collection endpoint, e.g. `/users`. **PUT:** A specific, unique endpoint, e.g. `/users/123`.",
+     "**ID Assignment** — **POST:** The server typically decides the resource ID. **PUT:** The client specifies the resource ID in the URL.",
+     "**Payload Requirement** — **POST:** Can be partial or full data, depending on the operation. **PUT:** Requires a complete replacement payload under the API contract; missing writable fields may be wiped, reset or set to null.",
+     "**Success Status** — **POST:** Typically `201 Created` for creation. **PUT:** `200 OK` or `204 No Content` for replacement; `201 Created` if a new resource is created."],
+  tip:"Idempotency means the same intended effect, not an identical response or status code. POST can be made idempotent through server-side deduplication (e.g. an Idempotency-Key). URL/ID patterns above are conventions; payload validation and omitted-field behavior depend on the API contract." },
 
 // ───────────── Authentication & Identity ─────────────
 { cat:"Authentication & Identity", q:"What is a JWT and how is it validated?",
