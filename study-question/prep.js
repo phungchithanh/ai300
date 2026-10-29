@@ -1,6 +1,7 @@
 // Shared renderer for the study questions pages.
-// Expects a global PREP_DATA = [{ cat, q, a:[bullets], table?, code?, tip?, level? }].
+// Expects a global PREP_DATA = [{ cat, q, a:[bullets], table?, tables?, code?, tip?, level? }].
 // Optional table: { caption, headers:[text], rows:[[text]] }; first column contains row headings.
+// Use tables:[table, ...] to show several tables in order.
 // Answers are always shown; a table of contents (keywords highlighted) is rendered above the list.
 // level is 'Core' (default) or 'Advanced'.
 // Bullet text supports `inline code` and **bold**.
@@ -45,18 +46,20 @@
   $('level').innerHTML = `<option value="">All levels (${data.length})</option>` +
     ['Core','Advanced'].map(l=>`<option value="${l}">${l} (${count(d=>d.level===l)})</option>`).join('');
 
+  const tableHtml = t => `<div class="answer-table-wrap" role="region" aria-label="${esc(t.caption)}" tabindex="0">
+          <table class="answer-table">
+            <caption>${fmt(t.caption)}</caption>
+            <thead><tr>${t.headers.map(h=>`<th scope="col">${fmt(h)}</th>`).join('')}</tr></thead>
+            <tbody>${t.rows.map(row=>`<tr>${row.map((cell,i)=>i===0?`<th scope="row">${fmt(cell)}</th>`:`<td>${fmt(cell)}</td>`).join('')}</tr>`).join('')}</tbody>
+          </table>
+        </div>`;
+
   function cardHtml(d){
     return `<div class="card" id="q${d.num}">
       <div class="qrow"><span class="qnum">Q${d.num}</span><div class="q">${fmt(d.q)}</div>${d.level==='Advanced'?'<span class="lvl">Advanced</span>':''}</div>
       <div class="answer">
         <ul>${d.a.map(b=>`<li>${fmt(b)}</li>`).join('')}</ul>
-        ${d.table ? `<div class="answer-table-wrap" role="region" aria-label="${esc(d.table.caption)}" tabindex="0">
-          <table class="answer-table">
-            <caption>${fmt(d.table.caption)}</caption>
-            <thead><tr>${d.table.headers.map(h=>`<th scope="col">${fmt(h)}</th>`).join('')}</tr></thead>
-            <tbody>${d.table.rows.map(row=>`<tr>${row.map((cell,i)=>i===0?`<th scope="row">${fmt(cell)}</th>`:`<td>${fmt(cell)}</td>`).join('')}</tr>`).join('')}</tbody>
-          </table>
-        </div>` : ''}
+        ${[].concat(d.table || [], d.tables || []).map(tableHtml).join('')}
         ${d.code ? `<pre><code>${esc(d.code)}</code></pre>` : ''}
         ${d.tip ? `<div class="tip">💡 ${fmt(d.tip)}</div>` : ''}
       </div>

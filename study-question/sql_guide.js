@@ -61,13 +61,26 @@ EXEC dbo.sp_CreateEngagementAssignment @EngagementId = 'E100', @PractitionerId =
      "**Rebuilding** the index recreates the index structure, **compacts pages**, and can improve read performance",
      "**Project example – Gi3 Engagement Management**: indexes on fields such as `EngagementId`, `ClientId`, `Status`, and `CreatedDate` could become fragmented after heavy data imports or updates, so rebuilding them as part of **database maintenance** helps keep search and reporting queries fast",
      "**What causes it** – inserts/updates/deletes cause **page splits → fragmentation** and half-empty pages",
-     "**Reorganize** – light, online defrag → ~**5–30%** fragmentation",
-     "**Rebuild** – drops & recreates index (also refreshes statistics) → **> 30%**",
-     "Do it after bulk loads, mass deletes, migrations; schedule in maintenance windows",
-     "Check with `sys.dm_db_index_physical_stats`"],
+     "Rebuild or reorganize after bulk loads, mass deletes, migrations; schedule in maintenance windows",
+     "Check fragmentation with `sys.dm_db_index_physical_stats`"],
+  tables:[
+    { caption:"Rebuild vs reorganize",
+      headers:["Action", "Meaning", "When to use"],
+      rows:[
+        ["Reorganize Index", "Light cleanup, online, less expensive", "Medium fragmentation"],
+        ["Rebuild Index", "Drops and recreates the index structure", "High fragmentation"]
+      ] },
+    { caption:"Common rule of thumb",
+      headers:["Fragmentation", "Action"],
+      rows:[
+        ["0% - 5%", "Do nothing"],
+        ["5% - 30%", "Reorganize"],
+        ["More than 30%", "Rebuild"]
+      ] }
+  ],
   code:`ALTER INDEX IX_Engagement_ClientId ON Engagements REORGANIZE;
 ALTER INDEX ALL ON Engagements REBUILD WITH (ONLINE = ON);  -- Enterprise / Azure SQL`,
-  tip:"On SSDs, fragmentation matters less — up-to-date **statistics** often matter more." },
+  tip:"A rebuild also refreshes the index's statistics; a reorganize doesn't. On SSDs, fragmentation matters less — up-to-date **statistics** often matter more." },
 
 { cat:"SQL Basics", q:"What is PostgreSQL and what are its strengths?",
   a:["Open-source, **standards-compliant** relational database",
