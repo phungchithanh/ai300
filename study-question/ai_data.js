@@ -276,6 +276,32 @@ User: <question>...</question>  <sources>...</sources>` },
     "properties": { "city": { "type":"string" } },
     "required": ["city"] } }` },
 
+{ cat:"AI Agents", q:"What is the ReAct pattern in AI agents, and how does the loop work?",
+  a:["The **ReAct pattern** (Reasoning and Acting) is a core framework for AI agents that combines step-by-step cognitive reasoning with external tool execution",
+     "Instead of generating a single answer in one pass, the agent moves through an **iterative loop** until the problem is solved",
+     "**How the ReAct Loop Works** – the agent cycles through four main stages repeatedly:",
+     "**1. Thought (Reason)** – the LLM reasons about the goal and what it has learned so far, then decides the next step",
+     "**2. Action (Act)** – it calls an external tool with specific inputs, e.g. web search, a calculator, an API or a database query",
+     "**3. Observation** – the tool's result is fed back into the context as new information",
+     "**4. Repeat or answer** – it loops back to a new Thought until it has enough information to give the **Final Answer**",
+     "**Example Flow** – if a user asks: \"What is the current age of Microsoft's CEO?\"",
+     "**Thought:** I need to find out who Microsoft's CEO is → **Action:** `search(\"Microsoft CEO\")` → **Observation:** Satya Nadella",
+     "**Thought:** Now I need his date of birth → **Action:** `search(\"Satya Nadella date of birth\")` → **Observation:** August 19, 1967",
+     "**Thought:** I need to calculate his age as of today → **Action:** `calculate_age(\"1967-08-19\")` → **Observation:** 59",
+     "**Thought:** I now know the final answer → **Final Answer:** Satya Nadella is 59 years old (as of October 2026)"],
+  table:{
+    caption:"Benefits vs. Drawbacks",
+    headers:["Aspect", "Benefits", "Drawbacks & Risks"],
+    rows:[
+      ["Accuracy", "Grounds answers in real data from tools, so fewer **hallucinations** and outdated answers", "A wrong tool choice, bad tool result or misread observation can derail every later step"],
+      ["Transparency", "The **Thought → Action → Observation** trace is readable, so it's easy to debug and audit", "Traces get long and verbose; the written reasoning isn't guaranteed to be how the model really decided"],
+      ["Adaptability", "Re-plans after every observation, so it handles **multi-step**, dynamic tasks", "Can loop, repeat the same action or never finish – needs a **max-iteration limit** and stop conditions"],
+      ["Cost & effort", "Works with any capable LLM through **prompting alone** – no fine-tuning needed", "Several LLM calls per request → **higher latency and token cost** than a single-pass answer"],
+      ["Security", "Can take real actions (call APIs, query data, run code) to automate work", "Tool output can carry **prompt injection**, and actions have real side effects – use guardrails, least-privilege tools and **human approval** for risky steps"]
+    ]
+  },
+  tip:"**ReAct vs. Chain-of-Thought** – CoT only reasons internally, so it can still hallucinate facts; ReAct interleaves reasoning with actions that fetch real data. Most agent frameworks now run this loop for you, typically through the model's native **function/tool calling** instead of parsing \"Action:\" text." },
+
 { cat:"AI Agents", q:"What are multi-agent systems and the Model Context Protocol (MCP)?",
   a:["**Multi-agent** – specialized agents (planner, researcher, coder, reviewer) collaborate via an orchestrator",
      "Patterns: sequential, hierarchical/supervisor, group chat, handoff",
