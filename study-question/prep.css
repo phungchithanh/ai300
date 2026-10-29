@@ -52,6 +52,14 @@ main{max-width:1000px;margin:20px auto;padding:0 16px 60px}
 .answer li{margin:6px 0;line-height:1.55;font-size:14.5px}
 .answer li::marker{color:var(--accent)}
 .answer b{color:#fde68a}
+.answer-table-wrap{overflow-x:auto;margin-top:14px}
+.answer-table-wrap:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.answer-table{width:100%;min-width:540px;border-collapse:collapse;font-size:14px;line-height:1.55}
+.answer-table caption{text-align:left;font-weight:700;font-size:15px;padding-bottom:10px}
+.answer-table th,.answer-table td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top}
+.answer-table thead th{background:var(--panel2);color:#fde68a}
+.answer-table th[scope="row"]{width:20%;font-weight:600}
+.answer-table td{width:40%}
 code{font-family:Consolas,"Cascadia Code",monospace;background:var(--code);border:1px solid var(--border);padding:1px 5px;border-radius:4px;font-size:13px;color:#93c5fd}
 pre{background:var(--code);border:1px solid var(--border);border-radius:8px;padding:12px;overflow:auto;margin:12px 0 0}
 pre code{background:none;border:none;padding:0;color:#cbd5e1;font-size:13px;line-height:1.5}
