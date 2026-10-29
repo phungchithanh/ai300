@@ -26,6 +26,34 @@ function Card({ title, children }: CardProps) {
   <p>{user.bio}</p>
 </Card>` },
 
+{ cat:"Hooks", q:"What is useEffect, and when should we use it?",
+  a:["**`useEffect` is a React Hook that synchronizes a component with an external system after a committed render.** Keep rendering pure; put synchronization work in an effect",
+     "**Use it for subscriptions and connections**: listen for browser events, subscribe to an external service or connect to a WebSocket; remove the listener or disconnect in cleanup",
+     "**Use it for timers and browser integrations**: start/stop an interval, update `document.title`, or synchronize a third-party widget with props/state",
+     "**Data fetching** can use an effect in client-only components, with cancellation/stale-response protection and loading/error handling; prefer a framework loader or data library when caching, SSR or deduplication is needed",
+     "**Do not use it for derived values**: calculate filtered lists, totals or full names during render; use `useMemo` only for expensive calculations",
+     "**Do not use it for a specific user action**: submitting a form or saving after a click belongs in that event handler, not in an effect watching a flag",
+     "**Dependencies**: no array runs after every commit; `[]` sets up on mount; `[a, b]` also re-synchronizes when those values change. Include all reactive values read by the effect",
+     "**Cleanup** runs before setup repeats for changed dependencies and on unmount. Root StrictMode adds a development-only setup/cleanup/setup check; effects do not run during server rendering"],
+  code:`import { useEffect, useState } from 'react';
+
+function WindowWidth() {
+  const [width, setWidth] = useState(null);
+
+  useEffect(() => {
+    function handleResize() {
+      setWidth(window.innerWidth);
+    }
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return <p>Window width: {width === null ? 'Measuring...' : width + 'px'}</p>;
+}`,
+  tip:"Ask: am I synchronizing with something outside React? If not, an effect is probably unnecessary." },
+
 { cat:"Hooks", q:"When does the useEffect cleanup function run, and what are common useEffect mistakes?",
   a:["Cleanup runs **before the effect re-runs** (when deps change) and **when the component unmounts**",
      "In dev **StrictMode**, React mounts → unmounts → mounts again to **test your cleanup**",
