@@ -221,41 +221,6 @@ stages:
      "Always have a **rollback** plan; watch health checks & metrics",
      "Azure: App Service **deployment slots**, Container Apps **revisions/traffic split**"] },
 
-// ───────────── AI-Assisted Development ─────────────
-{ cat:"AI-Assisted Development", q:"What is spec-driven development, and how does it differ from TDD?",
-  a:["**Spec-driven development** starts with an explicit, agreed specification of what a feature must do, then uses that specification to guide design, implementation and verification",
-     "**A useful spec includes** the problem and scope, expected behavior, API/data contracts, acceptance criteria, edge cases, error handling and measurable non-functional requirements such as performance, security and accessibility",
-     "**Workflow**: clarify requirements → review the spec → create a technical plan and small tasks → implement → test against acceptance criteria → review and update the spec as requirements evolve",
-     "**With AI coding tools**, give the agent the approved spec, constraints and task boundaries. Review generated code and run tests; a spec improves guidance but does not guarantee correctness",
-     "**Example**: for an order-creation API, specify required fields, authorization, duplicate-request behavior, response codes and validation errors before writing the endpoint",
-     "**Compared with TDD**: TDD uses the red → green → refactor cycle, writing a failing test before the implementation. Spec-driven development describes the broader intended behavior and constraints; the two approaches complement each other",
-     "**Benefits**: fewer ambiguous requirements, better alignment, traceability from requirements to tests, and more consistent human/AI implementations",
-     "**Trade-offs**: upfront effort and specification drift. Keep specs proportional to the task, version them with code, resolve contradictions early and verify them through tests and review"],
-  code:`Feature: Create an order
-Contract: POST /orders
-
-Acceptance criteria:
-- An authenticated customer can order one or more items.
-- Every quantity must be a positive integer.
-- The server calculates prices; it does not trust client totals.
-- Success returns 201 Created and Location: /orders/{id}.
-- Invalid input returns 400 with field-level errors.
-- Repeating the same request with the same supported idempotency
-  key does not create another order.
-- Reusing that key with a different payload returns 409 Conflict.
-
-Verification:
-- Test success, validation, authorization and duplicate retries.
-- Verify stored order data and response contracts.`,
-  tip:"Spec-driven = agree on what and why before implementing how. TDD = use failing tests to drive implementation. Neither requires AI." },
-
-{ cat:"AI-Assisted Development", q:"Vibe coding vs spec-driven development?",
-  a:["**Vibe coding** – prompt AI and iterate quickly with minimal upfront design → great for **prototypes/MVPs**",
-     "Risk: inconsistent architecture, hidden bugs, hard to maintain",
-     "**Spec-driven** – write specs, contracts, acceptance criteria, ADRs first → AI generates code **guided by the spec**",
-     "Slower upfront, but **maintainable, reviewable, testable** → enterprise systems",
-     "Either way: human review, tests and CI gates on AI-generated code"] }
-
 ];
 
 PREP_DATA.push(...[
