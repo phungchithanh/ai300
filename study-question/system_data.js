@@ -50,7 +50,7 @@ DELETE /api/engagements/E100     // delete → 204` },
       ["Success Status", "Typically `201 Created` for creation.", "`200 OK` or `204 No Content` for replacement; `201 Created` if a new resource is created."]
     ]
   },
-  tip:"Idempotency means the same intended effect, not an identical response or status code. POST can be made idempotent through server-side deduplication (e.g. an Idempotency-Key). URL/ID patterns above are conventions; payload validation and omitted-field behavior depend on the API contract." },
+  tip:"**an operation is idempotent if making the same request multiple times produces the exact same server-side outcome as making it just once**." },
 
 // ───────────── Authentication & Identity ─────────────
 { cat:"Authentication & Identity", q:"What is a JWT and how is it validated?",
