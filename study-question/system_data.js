@@ -36,7 +36,7 @@ DELETE /api/engagements/E100     // delete → 204` },
 
 { cat:"REST & HTTP", q:"What is the difference between PUT and POST in idempotency, resource URLs, payloads and status codes?",
   a:["The primary difference between **PUT and POST** lies in **idempotency and resource control**.",
-     "An HTTP operation is **idempotent** when: **Sending the same request multiple times has the same intended effect on the server as sending it once.**",
+     "**An operation is idempotent if making the same request multiple times produces the exact same server-side outcome as making it just once.**",
      "**PUT** is **idempotent**: repeating the exact same request leaves the resource in the same intended state as sending it once. You control the exact URL of the resource."],
   table:{
     caption:"Core Differences at a Glance",
