@@ -136,7 +136,19 @@ cache ??= new Dictionary<string, int>();` },
   a:["**Abstract class**: can have **state (fields)**, constructors, implemented & abstract members; **single inheritance**",
      "**Interface**: contract; class can implement **many**",
      "Since C# 8 interfaces can have **default implementations**, static members — but no instance fields",
-     "Use abstract class for **shared base behavior** (\"is-a\"); interface for **capabilities** (\"can-do\")"] },
+     "Use abstract class for **shared base behavior** (\"is-a\"); interface for **capabilities** (\"can-do\")"],
+  table:{
+    caption:"Direct Comparison",
+    headers:["Feature", "Abstract Class (`abstract class`)", "Interface (`interface`)"],
+    rows:[
+      ["Inheritance", "**Single inheritance** (a class can only inherit from one base class).", "**Multiple inheritance** (a class can implement multiple interfaces)."],
+      ["State / Fields", "**Can contain instance fields** (variables) to hold state.", "**Cannot contain instance fields**."],
+      ["Constructors", "**Can have constructors** to initialize base state.", "**Cannot have instance constructors** (a `static` constructor is allowed since C# 8)."],
+      ["Implementation", "Can contain both complete methods (concrete logic) and incomplete methods (abstract).", "Historically none. Since C# 8, they can provide **Default Interface Methods**."],
+      ["Access Modifiers", "Can use `private`, `protected`, `internal`, `public`, etc.", "Members are implicitly `public` by default."],
+      ["Versioning", "**Stronger flexibility**. Adding a concrete method won't break derived classes.", "**Risky**. Adding a method without a default implementation breaks all implementing classes."]
+    ]
+  } },
 
 { cat:"OOP in C#", q:"What is the difference between virtual, override, abstract, sealed and new?",
   a:["`virtual` – method **can** be overridden",
